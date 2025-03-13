@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
                     <div className="text-sm text-foreground/70 mt-1">Client<br/>Satisfaction</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold gradient-heading">50+</div>
+                    <div className="text-3xl md:text-4xl font-bold gradient-heading">10+</div>
                     <div className="text-sm text-foreground/70 mt-1">Startups<br/>Launched</div>
                   </div>
                 </div>
