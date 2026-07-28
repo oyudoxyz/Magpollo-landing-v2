@@ -190,24 +190,34 @@ export default async function handler(req, res) {
       }
     }
 
+    // Validate SMTP credentials are available
+    const smtpUser = process.env.SENDINBLUE_USER || process.env.SMTP_USER;
+    const smtpPass = process.env.SENDINBLUE_PASS || process.env.SMTP_PASSWORD;
+    
+    if (!smtpUser || !smtpPass) {
+      console.error('SMTP credentials missing. Available env vars:', Object.keys(process.env).filter(k => k.includes('SMTP') || k.includes('SENDINBLUE') || k.includes('EMAIL')));
+      return res.status(500).json({ 
+        message: 'Email service not configured. Please contact support.',
+        error: 'Missing SMTP credentials'
+      });
+    }
+
     // Setup email transporter using SendInBlue/Brevo
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
       port: parseInt(process.env.SMTP_PORT || '587'),
       secure: false, // true for 465, false for other ports
       auth: {
-        user: process.env.SENDINBLUE_USER || process.env.SMTP_USER,
-        pass: process.env.SENDINBLUE_PASS || process.env.SMTP_PASSWORD,
+        user: smtpUser,
+        pass: smtpPass,
       },
-      // Add additional options to improve deliverability
       tls: {
         rejectUnauthorized: true
       },
-      pool: true, // Use connection pool for better performance
-      maxConnections: 5,
-      rateDelta: 1000, // 1 second
-      rateLimit: 5, // 5 messages per second
-      debug: process.env.NODE_ENV !== 'production'
+      // No connection pooling - incompatible with serverless environments
+      connectionTimeout: 10000, // 10 second connection timeout
+      greetingTimeout: 10000,
+      socketTimeout: 15000,
     });
 
     // Prepare attachments if any
