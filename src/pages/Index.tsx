@@ -8,7 +8,8 @@ const Index: React.FC = () => (
   <Layout>
     <Hero />
     <section className="gutter pb-24 md:pb-32">
-      <div className="flex justify-end">
+      <div className="editorial-grid">
+        <div className="hidden lg:block" />
         <RetroComputer />
       </div>
     </section>
