@@ -4,69 +4,85 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Magpollo - From Concept to MVP in Weeks</title>
-    <meta name="description" content="We help non-technical founders and startups transform their ideas into functional MVPs that are ready for market validation.">
-    <meta name="keywords" content="MVP development, startup, non-technical founders, idea validation, product development">
-    
+    <title>Magpollo — Product Systems Studio</title>
+    <meta name="description" content="For owner-run businesses and practices. We diagnose one important workflow, then design and ship a focused software system around the way your firm actually operates.">
+    <meta name="keywords" content="product systems studio, internal software, workflow automation, owner-led firms, client development system, custom internal tools">
+
     <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Preload fonts -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
-    
+
+    <!-- Plus Jakarta Sans for everything, Cormorant Garamond for the big headlines -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
+
     <!-- Social media meta tags -->
-    <meta property="og:title" content="Magpollo - From Concept to MVP in Weeks">
-    <meta property="og:description" content="We help non-technical founders and startups transform their ideas into functional MVPs that are ready for market validation.">
+    <meta property="og:title" content="Magpollo — Product Systems Studio">
+    <meta property="og:description" content="A system should be handling that. We build the part your software does not cover, around how you actually work.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://magpollo.com">
     <meta property="og:image" content="https://magpollo.com/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Magpollo - From Concept to MVP in Weeks">
+    <meta property="og:image:alt" content="Magpollo — Product Systems Studio">
     <meta name="twitter:card" content="summary_large_image">
-    
+
     <!-- Theme color for browser UI -->
-    <meta name="theme-color" content="#ffffff">
-    
+    <meta name="theme-color" content="#DFD8CE">
+    <meta name="color-scheme" content="light">
+
     <style>
-      /* Apply custom fonts immediately to reduce layout shift */
-      body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #fff;
+      /* Applied immediately to avoid a flash before the app mounts */
+      html, body {
+        background-color: #DFD8CE;
         margin: 0;
       }
-      
-      /* Simple loading screen */
+
+      body {
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        color: #251F17;
+      }
+
       .preload-spinner {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #ffffff;
+        inset: 0;
+        background: #DFD8CE;
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 9999;
         transition: opacity 0.3s, visibility 0.3s;
       }
-      
-      .spinner {
-        width: 48px;
-        height: 48px;
-        border: 3px solid rgba(239, 68, 68, 0.1);
-        border-radius: 50%;
-        border-left-color: #ef4444;
-        animation: spin 1s linear infinite;
+
+      /* A hairline that draws itself, matching the rules used across the site */
+      .preload-rule {
+        width: 120px;
+        height: 1px;
+        background: #ACA69E;
+        position: relative;
+        overflow: hidden;
       }
-      
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+
+      .preload-rule::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: #251F17;
+        transform-origin: left;
+        animation: sweep 1.2s ease-in-out infinite;
       }
-      
+
+      @keyframes sweep {
+        0%   { transform: scaleX(0); transform-origin: left; }
+        50%  { transform: scaleX(1); transform-origin: left; }
+        51%  { transform: scaleX(1); transform-origin: right; }
+        100% { transform: scaleX(0); transform-origin: right; }
+      }
+
+      @media (prefers-reduced-motion) {
+        .preload-rule::after { animation: none; transform: scaleX(0.4); }
+      }
+
       .js-loaded .preload-spinner {
         opacity: 0;
         visibility: hidden;
@@ -74,16 +90,16 @@
     </style>
   </head>
   <body>
-    <!-- Loading spinner -->
+    <!-- Loading indicator -->
     <div class="preload-spinner">
-      <div class="spinner"></div>
+      <div class="preload-rule"></div>
     </div>
-    
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
+
     <script>
-      // Remove loading spinner when app is loaded
+      // Remove loading indicator when app is loaded
       window.addEventListener('load', function() {
         document.body.classList.add('js-loaded');
       });

@@ -2,12 +2,19 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import FormToEmail from '../emails/FormToEmail';
 
+export interface IntakeDetail {
+  label: string;
+  value: string;
+}
+
 interface SendMailProps {
   name: string;
   email: string;
   company?: string;
   message?: string;
   selectedServices: Array<{ id: number; title: string }>;
+  /** Structured intake answers, rendered as label/value rows in the email. */
+  details?: IntakeDetail[];
   files?: File[];
 }
 
@@ -26,6 +33,7 @@ export const sendMail = async (formData: SendMailProps): Promise<{ success: bool
         company: formData.company,
         message: formData.message,
         selectedServices: formData.selectedServices,
+        details: formData.details,
         files: formData.files?.map(file => ({ name: file.name }))
       })
     );
@@ -37,6 +45,7 @@ export const sendMail = async (formData: SendMailProps): Promise<{ success: bool
     if (formData.company) data.append('company', formData.company);
     if (formData.message) data.append('message', formData.message);
     data.append('selectedServices', JSON.stringify(formData.selectedServices.map(s => s.title)));
+    if (formData.details) data.append('details', JSON.stringify(formData.details));
     data.append('emailHtml', emailHtml);
 
     // Append files if any
@@ -61,11 +70,11 @@ export const sendMail = async (formData: SendMailProps): Promise<{ success: bool
     return { success: true, message: result.message || 'Email sent successfully' };
   } catch (error) {
     console.error('Email sending error:', error);
-    return { 
-      success: false, 
+    return {
+      success: false,
       message: error instanceof Error ? error.message : 'Unknown error occurred'
     };
   }
 };
 
-export default sendMail; 
+export default sendMail;

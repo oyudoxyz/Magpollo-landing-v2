@@ -18,6 +18,8 @@ interface FormToEmailProps {
   company?: string;
   message?: string;
   selectedServices: Array<{ id: number; title: string }>;
+  /** Structured intake answers. When present these replace the plain message body. */
+  details?: Array<{ label: string; value: string }>;
   files?: Array<{ name: string }>;
 }
 
@@ -27,9 +29,11 @@ export const FormToEmail: React.FC<FormToEmailProps> = ({
   company,
   message,
   selectedServices,
+  details,
   files,
 }) => {
-  const previewText = `New inquiry from ${name} (${email})`;
+  const previewText = `New intake from ${name} (${email})`;
+  const hasDetails = !!details && details.length > 0;
 
   return (
     <Html>
@@ -37,10 +41,10 @@ export const FormToEmail: React.FC<FormToEmailProps> = ({
       <Preview>{previewText}</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={heading}>New Inquiry from Magpollo Website</Heading>
-          
+          <Heading style={heading}>New intake from the Magpollo website</Heading>
+
           <Section style={section}>
-            <Heading as="h2" style={subheading}>Contact Information</Heading>
+            <Heading as="h2" style={subheading}>Who</Heading>
             <Text style={text}>
               <strong>Name:</strong> {name}
             </Text>
@@ -52,38 +56,53 @@ export const FormToEmail: React.FC<FormToEmailProps> = ({
             </Text>
             {company && (
               <Text style={text}>
-                <strong>Company:</strong> {company}
+                <strong>Firm:</strong> {company}
               </Text>
             )}
           </Section>
-          
-          <Hr style={hr} />
-          
-          <Section style={section}>
-            <Heading as="h2" style={subheading}>Services Requested</Heading>
-            {selectedServices.length > 0 ? (
-              <ul style={list}>
-                {selectedServices.map((service) => (
-                  <li key={service.id} style={listItem}>
-                    {service.title}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <Text style={text}>No specific services selected.</Text>
-            )}
-          </Section>
-          
-          {message && (
+
+          {hasDetails ? (
+            details.map((detail) => (
+              <React.Fragment key={detail.label}>
+                <Hr style={hr} />
+                <Section style={section}>
+                  <Heading as="h2" style={subheading}>{detail.label}</Heading>
+                  {detail.value.split('\n').map((line, i) => (
+                    <Text key={i} style={text}>{line}</Text>
+                  ))}
+                </Section>
+              </React.Fragment>
+            ))
+          ) : (
             <>
               <Hr style={hr} />
               <Section style={section}>
-                <Heading as="h2" style={subheading}>Message</Heading>
-                <Text style={text}>{message}</Text>
+                <Heading as="h2" style={subheading}>Selected</Heading>
+                {selectedServices.length > 0 ? (
+                  <ul style={list}>
+                    {selectedServices.map((service) => (
+                      <li key={service.id} style={listItem}>
+                        {service.title}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <Text style={text}>Nothing selected.</Text>
+                )}
               </Section>
+
+              {message && (
+                <>
+                  <Hr style={hr} />
+                  <Section style={section}>
+                    <Heading as="h2" style={subheading}>Message</Heading>
+                    <Text style={text}>{message}</Text>
+                  </Section>
+                </>
+              )}
             </>
           )}
-          
+
           {files && files.length > 0 && (
             <>
               <Hr style={hr} />
@@ -99,15 +118,15 @@ export const FormToEmail: React.FC<FormToEmailProps> = ({
               </Section>
             </>
           )}
-          
+
           <Hr style={hr} />
-          
+
           <Section style={footer}>
             <Text style={footerText}>
               &copy; {new Date().getFullYear()} Magpollo. All rights reserved.
             </Text>
             <Text style={footerText}>
-              This is an automated message from the Magpollo website contact form.
+              Sent by the intake form at magpollo.com.
             </Text>
           </Section>
         </Container>
@@ -126,25 +145,25 @@ const container = {
   margin: '0 auto',
   padding: '20px',
   backgroundColor: '#ffffff',
-  borderRadius: '5px',
   maxWidth: '600px',
 };
 
 const heading = {
-  color: '#ef4444',
-  fontSize: '24px',
+  color: '#CE4257',
+  fontSize: '22px',
   lineHeight: '1.3',
   fontWeight: '700',
-  textAlign: 'center' as const,
-  margin: '30px 0',
+  margin: '20px 0 30px',
 };
 
 const subheading = {
-  color: '#333',
-  fontSize: '20px',
+  color: '#6B6861',
+  fontSize: '11px',
+  letterSpacing: '0.1em',
+  textTransform: 'uppercase' as const,
   lineHeight: '1.3',
   fontWeight: '600',
-  margin: '20px 0 10px',
+  margin: '20px 0 8px',
 };
 
 const section = {
@@ -152,10 +171,10 @@ const section = {
 };
 
 const text = {
-  color: '#333',
-  fontSize: '16px',
+  color: '#1A1A1A',
+  fontSize: '15px',
   lineHeight: '1.5',
-  margin: '10px 0',
+  margin: '6px 0',
 };
 
 const list = {
@@ -165,32 +184,31 @@ const list = {
 
 const listItem = {
   margin: '5px 0',
-  color: '#333',
-  fontSize: '16px',
+  color: '#1A1A1A',
+  fontSize: '15px',
   lineHeight: '1.5',
 };
 
 const link = {
-  color: '#ef4444',
+  color: '#CE4257',
   textDecoration: 'underline',
 };
 
 const hr = {
-  borderColor: '#ddd',
+  borderColor: '#e5e5e5',
   margin: '20px 0',
 };
 
 const footer = {
-  textAlign: 'center' as const,
   padding: '0 15px',
   marginTop: '20px',
 };
 
 const footerText = {
-  color: '#777',
-  fontSize: '14px',
+  color: '#8a8a8a',
+  fontSize: '13px',
   lineHeight: '1.5',
-  margin: '5px 0',
+  margin: '4px 0',
 };
 
-export default FormToEmail; 
+export default FormToEmail;
