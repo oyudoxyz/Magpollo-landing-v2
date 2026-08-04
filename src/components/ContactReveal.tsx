@@ -45,7 +45,7 @@ const InstagramIcon = () => (
 
 const links = [
   { label: 'salesteam@magpollo.com', href: 'mailto:salesteam@magpollo.com', Icon: MailIcon },
-  { label: '+1 (470) 952-5987', href: 'tel:+14709525987', Icon: PhoneIcon },
+  { label: '+1 (470) 287-7285', href: 'tel:+14702877285', Icon: PhoneIcon },
   { label: 'X', href: 'https://x.com/MagpolloTech', Icon: TwitterIcon },
   { label: 'LinkedIn', href: 'http://linkedin.com/company/magpollo', Icon: LinkedinIcon },
   { label: 'Discord', href: 'https://discord.gg/4Qv8khbBf8', Icon: DiscordIcon },
