@@ -1,0 +1,43 @@
+<svg viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif">
+  <!-- Top-left: Command center -->
+  <rect x="24" y="24" width="368" height="212" rx="8" fill="#FAF8F5" stroke="#ACA69E" stroke-opacity="0.5"/>
+  <text x="44" y="52" font-family="'JetBrains Mono', Menlo, monospace" font-size="10" fill="#CE4257" font-weight="600" letter-spacing="0.1em">THE COMMAND CENTER &#183; 10 SCREENS</text>
+  <text x="44" y="80" font-size="11.5" fill="#635D53"><tspan font-weight="600" fill="#251F17">Home:</tspan> quota meters, nudges, engine heartbeat</text>
+  <text x="44" y="102" font-size="11.5" fill="#635D53"><tspan font-weight="600" fill="#251F17">Signals:</tspan> scored feed, Work-this, on-demand Enrich</text>
+  <text x="44" y="124" font-size="11.5" fill="#635D53"><tspan font-weight="600" fill="#251F17">Outreach:</tspan> review &#183; launch &#183; in-flight &#183; replies</text>
+  <text x="44" y="146" font-size="11.5" fill="#635D53"><tspan font-weight="600" fill="#251F17">Pipeline:</tspan> kanban + full lead workspace</text>
+  <text x="44" y="168" font-size="11.5" fill="#635D53"><tspan font-weight="600" fill="#251F17">Win-back:</tspan> former-client import + blitz</text>
+  <text x="44" y="190" font-size="11.5" fill="#635D53"><tspan font-weight="600" fill="#251F17">Chat + Knowledge:</tspan> sales brain, doc upload</text>
+  <text x="44" y="212" font-size="11.5" fill="#635D53"><tspan font-weight="600" fill="#251F17">Metrics:</tspan> funnel, quota pace, outbound counts</text>
+
+  <!-- Top-right: Engine -->
+  <rect x="408" y="24" width="368" height="212" rx="8" fill="#FAF8F5" stroke="#ACA69E" stroke-opacity="0.5"/>
+  <text x="428" y="52" font-family="'JetBrains Mono', Menlo, monospace" font-size="10" fill="#CE4257" font-weight="600" letter-spacing="0.1em">THE ENGINE &#183; TICKS EVERY 3 MIN</text>
+  <text x="428" y="80" font-size="11.5" fill="#635D53">drains the job queue</text>
+  <text x="428" y="102" font-size="11.5" fill="#635D53">drafts outreach in the rep's approved voice</text>
+  <text x="428" y="124" font-size="11.5" fill="#635D53">scans + classifies email replies (every 15 min)</text>
+  <text x="428" y="146" font-size="11.5" fill="#635D53">advances day-3 / day-9 follow-ups, stops on reply</text>
+  <text x="428" y="168" font-size="11.5" fill="#635D53">geocodes new businesses, rebuilds walk clusters</text>
+  <text x="428" y="190" font-size="11.5" fill="#635D53">mirrors the database to the review sheet daily</text>
+  <text x="428" y="212" font-size="11.5" fill="#635D53">fires the morning brief + evening debrief</text>
+
+  <!-- Bottom-left: Field kit -->
+  <rect x="24" y="252" width="368" height="204" rx="8" fill="#FAF8F5" stroke="#ACA69E" stroke-opacity="0.5"/>
+  <text x="44" y="280" font-family="'JetBrains Mono', Menlo, monospace" font-size="10" fill="#CE4257" font-weight="600" letter-spacing="0.1em">THE FIELD KIT</text>
+  <text x="44" y="308" font-size="11.5" fill="#635D53">walkable door-pull routes with Maps links</text>
+  <text x="44" y="330" font-size="11.5" fill="#635D53">branded one-pager builder (AI copy, fixed format)</text>
+  <text x="44" y="352" font-size="11.5" fill="#635D53">one-click SMS blitz scripts, grouped by vertical</text>
+  <text x="44" y="374" font-size="11.5" fill="#635D53">meeting call-aheads: day before + 1 hour before</text>
+  <text x="44" y="396" font-size="11.5" fill="#635D53">AI lead actions: prep, text, email, voicemail, research</text>
+  <text x="44" y="418" font-size="11.5" fill="#635D53">prompt library encoding the sales methodology</text>
+
+  <!-- Bottom-right: Cloud workers -->
+  <rect x="408" y="252" width="368" height="204" rx="8" fill="#FAF8F5" stroke="#ACA69E" stroke-opacity="0.5"/>
+  <text x="428" y="280" font-family="'JetBrains Mono', Menlo, monospace" font-size="10" fill="#CE4257" font-weight="600" letter-spacing="0.1em">THE CLOUD WORKERS &#183; n8n ON CRON</text>
+  <text x="428" y="308" font-size="11.5" fill="#635D53">business-license feed, weekly</text>
+  <text x="428" y="330" font-size="11.5" fill="#635D53">county food permits, straight off gov ArcGIS</text>
+  <text x="428" y="352" font-size="11.5" fill="#635D53">liquor-board issuances, weekly PDF, LLM-parsed</text>
+  <text x="428" y="374" font-size="11.5" fill="#635D53">local-news article extraction, LLM-parsed</text>
+  <text x="428" y="396" font-size="11.5" fill="#635D53">all synced into the local database</text>
+  <text x="428" y="418" font-size="11.5" fill="#635D53">$0 to $0.05 per run</text>
+</svg>

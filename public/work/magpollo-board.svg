@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420" fill="none" role="img" aria-label="Placeholder diagram for Magpollo outbound board">
+  <rect width="800" height="420" fill="#FAFAF7"/>
+  <rect x="40" y="40" width="720" height="340" rx="8" stroke="rgba(10,10,11,0.08)" stroke-width="1"/>
+  <text x="80" y="110" fill="rgba(10,10,11,0.35)" font-family="ui-monospace,Menlo,monospace" font-size="14">MAGPOLO · OUTBOUND BOARD (PLACEHOLDER)</text>
+  <rect x="80" y="140" width="180" height="88" rx="6" fill="#F4F2EB" stroke="rgba(10,10,11,0.08)"/>
+  <rect x="290" y="140" width="180" height="88" rx="6" fill="#F4F2EB" stroke="rgba(10,10,11,0.08)"/>
+  <rect x="500" y="140" width="220" height="88" rx="6" fill="#EEF2FF" stroke="rgba(27,77,255,0.25)"/>
+  <path d="M260 184H290M470 184H500" stroke="rgba(10,10,11,0.15)" stroke-width="1.5"/>
+  <text x="80" y="290" fill="rgba(10,10,11,0.45)" font-family="system-ui,sans-serif" font-size="13">Replace with real HubSpot board / sequence screenshot when ready.</text>
+</svg>

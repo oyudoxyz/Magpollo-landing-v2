@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 480" fill="none">
+  <!-- Monitor body -->
+  <rect x="60" y="10" width="400" height="300" rx="16" fill="#EAE4DA"/>
+  <rect x="61" y="11" width="398" height="298" rx="15" stroke="#F0EBE3" stroke-width="1" fill="none"/>
+  <rect x="61" y="307" width="398" height="2" rx="1" fill="#C5BFB5"/>
+
+  <!-- Bezel -->
+  <rect x="80" y="28" width="360" height="260" rx="8" fill="#D5CFC5"/>
+
+  <!-- Screen -->
+  <rect x="90" y="38" width="340" height="240" rx="4" fill="#1A1610"/>
+
+  <!-- Title bar -->
+  <rect x="90" y="38" width="340" height="22" rx="4" fill="#1A1610"/>
+  <rect x="90" y="56" width="340" height="1" fill="#635D53" opacity="0.25"/>
+  <!-- Red dot -->
+  <circle cx="103" cy="49" r="3.5" fill="#CE4257"/>
+  <!-- Title text -->
+  <text x="114" y="52" font-family="Courier New, Courier, monospace" font-size="9" fill="#C8C2B6" opacity="0.7" letter-spacing="0.5">Magpollo PS 1.0</text>
+
+  <!-- Sidebar -->
+  <rect x="90" y="60" width="70" height="218" rx="0" fill="none"/>
+  <line x1="160" y1="60" x2="160" y2="278" stroke="#635D53" stroke-opacity="0.2" stroke-width="1"/>
+
+  <!-- Sidebar items -->
+  <g font-family="Courier New, Courier, monospace" font-size="8" letter-spacing="0.2">
+    <!-- System (active) -->
+    <rect x="94" y="68" width="60" height="16" rx="2" fill="#635D53" fill-opacity="0.15"/>
+    <circle cx="102" cy="76" r="3" fill="#CE4257"/>
+    <text x="110" y="79" fill="#C8C2B6">System</text>
+    <!-- Clients -->
+    <circle cx="102" cy="94" r="3" fill="#CE4257" opacity="0.6"/>
+    <text x="110" y="97" fill="#C8C2B6" opacity="0.8">Clients</text>
+    <!-- Invoices -->
+    <circle cx="102" cy="112" r="3" fill="#635D53"/>
+    <text x="110" y="115" fill="#C8C2B6" opacity="0.8">Invoices</text>
+    <!-- Outreach -->
+    <circle cx="102" cy="130" r="3" fill="#635D53"/>
+    <text x="110" y="133" fill="#C8C2B6" opacity="0.8">Outreach</text>
+    <!-- Reports -->
+    <circle cx="102" cy="148" r="3" fill="#635D53"/>
+    <text x="110" y="151" fill="#C8C2B6" opacity="0.8">Reports</text>
+  </g>
+
+  <!-- Window -->
+  <rect x="168" y="68" width="254" height="190" rx="2" stroke="#635D53" stroke-opacity="0.3" stroke-width="1" fill="#251F17" fill-opacity="0.3"/>
+  <!-- Window title bar -->
+  <rect x="168" y="68" width="254" height="18" rx="2" fill="none"/>
+  <line x1="168" y1="86" x2="422" y2="86" stroke="#635D53" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="2 2"/>
+  <text x="176" y="80" font-family="Courier New, Courier, monospace" font-size="8" fill="#C8C2B6" letter-spacing="0.3">workflow.txt</text>
+  <text x="408" y="80" font-family="Courier New, Courier, monospace" font-size="7" fill="#C8C2B6" opacity="0.5">[x]</text>
+
+  <!-- Window body text -->
+  <g font-family="Courier New, Courier, monospace" font-size="9" fill="#C8C2B6" letter-spacing="0.1">
+    <text x="176" y="102">Good morning. Your follow-ups are</text>
+    <text x="176" y="116">sent, invoices are filed, and your</text>
+    <text x="176" y="130">calendar is set. Ready when you are.</text>
+  </g>
+  <!-- Cursor -->
+  <rect x="370" y="122" width="2" height="12" fill="#CE4257"/>
+
+  <!-- Status bar -->
+  <line x1="90" y1="264" x2="430" y2="264" stroke="#635D53" stroke-opacity="0.2" stroke-width="1"/>
+  <text x="98" y="274" font-family="Courier New, Courier, monospace" font-size="7" fill="#C8C2B6" opacity="0.5" letter-spacing="0.4">5 tasks completed</text>
+  <text x="380" y="274" font-family="Courier New, Courier, monospace" font-size="7" fill="#C8C2B6" opacity="0.5" letter-spacing="0.4">connected</text>
+
+  <!-- CRT scanlines overlay -->
+  <defs>
+    <pattern id="scanlines" patternUnits="userSpaceOnUse" width="4" height="3">
+      <rect width="4" height="2" fill="transparent"/>
+      <rect y="2" width="4" height="1" fill="#251F17" opacity="0.04"/>
+    </pattern>
+  </defs>
+  <rect x="90" y="38" width="340" height="240" rx="4" fill="url(#scanlines)"/>
+
+  <!-- Product Systems badge -->
+  <rect x="84" y="294" width="76" height="12" fill="#CE4257"/>
+  <text x="89" y="303" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-size="6" font-weight="700" fill="#DFD8CE" letter-spacing="0.8" text-transform="uppercase">PRODUCT SYSTEMS</text>
+  <!-- Logo mark -->
+  <rect x="166" y="294" width="10" height="10" fill="#CE4257"/>
+
+  <!-- Chin -->
+  <rect x="60" y="310" width="400" height="20" rx="4" fill="#EAE4DA"/>
+  <line x1="60" y1="310" x2="460" y2="310" stroke="#D5CFC5" stroke-width="1"/>
+  <!-- Floppy slot -->
+  <rect x="180" y="316" width="160" height="5" rx="1.5" fill="#C5BFB5"/>
+  <rect x="180" y="321" width="160" height="1" rx="0.5" fill="#F0EBE3"/>
+
+  <!-- Keyboard -->
+  <rect x="40" y="338" width="440" height="90" rx="4" fill="#EAE4DA"/>
+  <rect x="41" y="339" width="438" height="88" rx="3" stroke="#F0EBE3" stroke-width="1" fill="none"/>
+
+  <!-- Keyboard row 1 -->
+  <g fill="#E2DCD2">
+    <rect x="56" y="348" width="26" height="14" rx="2"/><rect x="86" y="348" width="26" height="14" rx="2"/>
+    <rect x="116" y="348" width="26" height="14" rx="2"/><rect x="146" y="348" width="26" height="14" rx="2"/>
+    <rect x="176" y="348" width="26" height="14" rx="2"/><rect x="206" y="348" width="26" height="14" rx="2"/>
+    <rect x="236" y="348" width="26" height="14" rx="2"/><rect x="266" y="348" width="26" height="14" rx="2"/>
+    <rect x="296" y="348" width="26" height="14" rx="2"/><rect x="326" y="348" width="26" height="14" rx="2"/>
+    <rect x="356" y="348" width="26" height="14" rx="2"/><rect x="386" y="348" width="26" height="14" rx="2"/>
+    <rect x="416" y="348" width="26" height="14" rx="2"/>
+  </g>
+
+  <!-- Keyboard row 2 -->
+  <g fill="#E2DCD2">
+    <rect x="66" y="366" width="26" height="14" rx="2"/><rect x="96" y="366" width="26" height="14" rx="2"/>
+    <rect x="126" y="366" width="26" height="14" rx="2"/><rect x="156" y="366" width="26" height="14" rx="2"/>
+    <rect x="186" y="366" width="26" height="14" rx="2"/><rect x="216" y="366" width="26" height="14" rx="2"/>
+    <rect x="246" y="366" width="26" height="14" rx="2"/><rect x="276" y="366" width="26" height="14" rx="2"/>
+    <rect x="306" y="366" width="26" height="14" rx="2"/><rect x="336" y="366" width="26" height="14" rx="2"/>
+    <rect x="366" y="366" width="26" height="14" rx="2"/><rect x="396" y="366" width="26" height="14" rx="2"/>
+  </g>
+
+  <!-- Keyboard row 3 -->
+  <g fill="#E2DCD2">
+    <rect x="76" y="384" width="26" height="14" rx="2"/><rect x="106" y="384" width="26" height="14" rx="2"/>
+    <rect x="136" y="384" width="26" height="14" rx="2"/><rect x="166" y="384" width="26" height="14" rx="2"/>
+    <rect x="196" y="384" width="26" height="14" rx="2"/><rect x="226" y="384" width="26" height="14" rx="2"/>
+    <rect x="256" y="384" width="26" height="14" rx="2"/><rect x="286" y="384" width="26" height="14" rx="2"/>
+    <rect x="316" y="384" width="26" height="14" rx="2"/><rect x="346" y="384" width="26" height="14" rx="2"/>
+    <rect x="376" y="384" width="26" height="14" rx="2"/>
+  </g>
+
+  <!-- Keyboard row 4 (spacebar) -->
+  <g fill="#E2DCD2">
+    <rect x="106" y="402" width="26" height="14" rx="2"/>
+    <rect x="136" y="402" width="26" height="14" rx="2"/>
+    <rect x="176" y="402" width="160" height="14" rx="2"/>
+    <rect x="350" y="402" width="26" height="14" rx="2"/>
+    <rect x="380" y="402" width="26" height="14" rx="2"/>
+  </g>
+
+  <!-- Key shadows -->
+  <defs>
+    <filter id="keyShadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="0" flood-color="#C5BFB5"/>
+    </filter>
+  </defs>
+</svg>
