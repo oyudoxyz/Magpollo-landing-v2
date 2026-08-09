@@ -20,14 +20,14 @@ const Navbar: React.FC = () => {
         </ContactReveal>
 
         <div className="flex items-center gap-6 md:gap-8">
-          <Link
-            to="/work/sales-ops-system"
-            className={`meta-link transition-opacity duration-300 hover:text-foreground ${
-              open ? 'opacity-30' : 'opacity-100'
-            }`}
-          >
-            Proof of work
-          </Link>
+        <a
+          href="/work"
+          className={`meta-link transition-opacity duration-300 hover:text-foreground ${
+            open ? 'opacity-30' : 'opacity-100'
+          }`}
+        >
+          Proof of work
+        </a>
           <Link
             to="/lets-build"
             className={`meta-link transition-opacity duration-300 hover:text-foreground ${

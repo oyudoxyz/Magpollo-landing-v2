@@ -476,6 +476,18 @@ const SalesOpsSystem: React.FC = () => {
                 And it deploys inside enterprise constraints because the constraints were designed in, not fought: a human gate on every send, a manual-only CRM path, metered enrichment, guardrailed generation. Compliance here is not a policy document. It is the architecture.
               </p>
             </div>
+
+            <div className="mt-8 border-t border-border pt-6 print:hidden">
+              <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                Another system we shipped
+              </p>
+              <a
+                href="/work/custom-commerce"
+                className="mt-2 inline-flex text-base font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-mark"
+              >
+                Custom Commerce System: From Visual Choice to Fulfillment
+              </a>
+            </div>
           </section>
 
           {/* Document Footer Bar */}
