@@ -1,33 +1,33 @@
 <svg width="1200" height="420" viewBox="0 0 1200 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Custom commerce system architecture</title>
   <desc id="desc">A flow from customer configuration through pricing, checkout, fulfillment, and support.</desc>
-  <rect width="1200" height="420" fill="#F8F5EF"/>
-  <path d="M214 210H286M514 210H586M814 210H886" stroke="#9A9388" stroke-width="2" stroke-dasharray="7 7"/>
-  <path d="M274 202L286 210L274 218M574 202L586 210L574 218M874 202L886 210L874 218" stroke="#9A9388" stroke-width="2"/>
-  <rect x="32" y="92" width="182" height="236" rx="2" fill="#EFE9DF" stroke="#BDB5A9" stroke-width="2"/>
-  <rect x="332" y="92" width="182" height="236" rx="2" fill="#F2E4DD" stroke="#C7472F" stroke-width="2"/>
-  <rect x="632" y="92" width="182" height="236" rx="2" fill="#E7EEF0" stroke="#A8B8BD" stroke-width="2"/>
-  <rect x="932" y="92" width="236" height="236" rx="2" fill="#E7E9DF" stroke="#A8AD98" stroke-width="2"/>
-  <text x="32" y="48" fill="#6B665F" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="2">THE ORDER CONTRACT</text>
-  <text x="52" y="132" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">Customer</text>
-  <text x="52" y="160" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">input</text>
-  <text x="52" y="202" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Teeth and material</text>
-  <text x="52" y="225" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Style and stones</text>
-  <text x="52" y="248" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Cut preference</text>
-  <text x="352" y="132" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">Rules +</text>
-  <text x="352" y="160" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">pricing</text>
-  <text x="352" y="202" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Availability matrix</text>
-  <text x="352" y="225" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Per-tooth and tier rates</text>
-  <text x="352" y="248" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Complete configuration</text>
-  <text x="652" y="132" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">Checkout +</text>
-  <text x="652" y="160" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">persistence</text>
-  <text x="652" y="202" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Pending order record</text>
-  <text x="652" y="225" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Signed payment event</text>
-  <text x="652" y="248" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Immutable build data</text>
-  <text x="952" y="132" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">Fulfillment +</text>
-  <text x="952" y="160" fill="#211F1B" font-family="Arial, sans-serif" font-size="22" font-weight="700">support</text>
-  <text x="952" y="202" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Structured instructions</text>
-  <text x="952" y="225" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Customer order history</text>
-  <text x="952" y="248" fill="#6B665F" font-family="Arial, sans-serif" font-size="15">Identity-linked chat</text>
-  <text x="52" y="382" fill="#9A9388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" letter-spacing="1.3">A CUSTOM REQUEST BECOMES A DATA CONTRACT</text>
+  <rect width="1200" height="420" fill="#E8E1D7"/>
+  <path d="M214 210H286M514 210H586M814 210H886" stroke="#ACA69E" stroke-width="2" stroke-dasharray="7 7"/>
+  <path d="M274 202L286 210L274 218M574 202L586 210L574 218M874 202L886 210L874 218" stroke="#ACA69E" stroke-width="2"/>
+  <rect x="32" y="92" width="182" height="236" rx="2" fill="#E8E1D7" stroke="#ACA69E" stroke-width="2"/>
+  <rect x="332" y="92" width="182" height="236" rx="2" fill="#E8D9D9" stroke="#CE4257" stroke-width="2"/>
+  <rect x="632" y="92" width="182" height="236" rx="2" fill="#E8E1D7" stroke="#ACA69E" stroke-width="2"/>
+  <rect x="932" y="92" width="236" height="236" rx="2" fill="#E8E1D7" stroke="#ACA69E" stroke-width="2"/>
+  <text x="32" y="48" fill="#635D53" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="2">THE ORDER CONTRACT</text>
+  <text x="52" y="132" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">Customer</text>
+  <text x="52" y="160" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">input</text>
+  <text x="52" y="202" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Teeth and material</text>
+  <text x="52" y="225" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Style and stones</text>
+  <text x="52" y="248" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Cut preference</text>
+  <text x="352" y="132" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">Rules +</text>
+  <text x="352" y="160" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">pricing</text>
+  <text x="352" y="202" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Availability matrix</text>
+  <text x="352" y="225" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Per-tooth and tier rates</text>
+  <text x="352" y="248" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Complete configuration</text>
+  <text x="652" y="132" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">Checkout +</text>
+  <text x="652" y="160" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">persistence</text>
+  <text x="652" y="202" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Pending order record</text>
+  <text x="652" y="225" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Signed payment event</text>
+  <text x="652" y="248" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Immutable build data</text>
+  <text x="952" y="132" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">Fulfillment +</text>
+  <text x="952" y="160" fill="#251F17" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="22" font-weight="700">support</text>
+  <text x="952" y="202" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Structured instructions</text>
+  <text x="952" y="225" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Customer order history</text>
+  <text x="952" y="248" fill="#635D53" font-family="Plus Jakarta Sans, Arial, sans-serif" font-size="15">Identity-linked chat</text>
+  <text x="52" y="382" fill="#ACA69E" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" letter-spacing="1.3">A CUSTOM REQUEST BECOMES A DATA CONTRACT</text>
 </svg>

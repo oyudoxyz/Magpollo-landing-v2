@@ -23,13 +23,21 @@ const page = `<!doctype html>
     <meta property="og:url" content="https://magpollo.com/work">
     <meta property="og:image" content="https://magpollo.com/assets/og-image.jpg">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#DFD8CE">
+    <meta name="color-scheme" content="light">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
     <link rel="stylesheet" href="/work/custom-commerce.css">
     <script type="application/ld+json">${structuredData}</script>
   </head>
   <body>
+    <div class="preload-spinner" aria-hidden="true"><div class="preload-rule"></div></div>
+    <div class="page-ruler" aria-hidden="true"><div class="guides-ruler"></div></div>
     <div class="case-shell">
       <nav class="case-nav" aria-label="Work navigation">
-        <a class="case-brand" href="/">MagPollo</a>
+        <a class="case-brand" href="/" aria-label="Magpollo home"><img src="/assets/magpollo-logo.svg" alt="Magpollo" width="124" height="30"></a>
         <div class="case-nav-links"><a href="/lets-build">Let's build</a></div>
       </nav>
       <main class="case-article">
@@ -61,6 +69,7 @@ const page = `<!doctype html>
         </footer>
       </main>
     </div>
+    <script>window.addEventListener('load', function () { document.body.classList.add('js-loaded'); });</script>
   </body>
 </html>`;
 
