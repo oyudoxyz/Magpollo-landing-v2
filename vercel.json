@@ -5,7 +5,7 @@
     { "source": "/work/", "destination": "/api/work/index" },
     { "source": "/work/custom-commerce", "destination": "/api/work/custom-commerce" },
     { "source": "/work/custom-commerce/", "destination": "/api/work/custom-commerce" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!.*\\.[a-zA-Z0-9]+$).*)", "destination": "/index.html" }
   ],
   "buildCommand": "npm run build",
   "outputDirectory": "dist"
