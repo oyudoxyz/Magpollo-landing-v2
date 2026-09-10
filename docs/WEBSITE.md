@@ -7,13 +7,12 @@ Updated 2026-09-10 with the company-site rebuild.
 | Route | Page | Modules |
 |---|---|---|
 | `/` | Home | Hero (Cormorant, the only place), Sound familiar, What we build (three steps on a white plate, no prices or timelines), Proof (one ink band, walkthrough on request) |
-| `/company` | Company | Header and details (absorbs contact) |
 | `/careers` | Careers | Header, four lanes, form on a white plate |
 | `/work` | Proof of work | Header with the printer illustration, two one-line summaries, request form. Old `/work/*` URLs redirect here |
 | `/lets-build` | Intake | Two-step intake |
 | `/privacy`, `/terms` | Legal | Plain-language privacy and terms |
 
-`/systems`, `/how-we-work` and `/contact` were built in v1 and cut in v2 as repetition; they redirect.
+`/systems`, `/how-we-work`, `/contact` and `/company` were built in v1 and cut in v2 as repetition; they redirect. Contact details live in the footer and behind the logo and copyright.
 
 ## Grounds
 

@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
-import Company from "./pages/Company";
 import Careers from "./pages/Careers";
 import Work from "./pages/Work";
 import LetsBuild from "./pages/LetsBuild";
@@ -27,9 +26,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/systems" element={<Navigate to="/#systems" replace />} />
           <Route path="/how-we-work" element={<Navigate to="/#systems" replace />} />
-          <Route path="/company" element={<Company />} />
-          <Route path="/about" element={<Navigate to="/company" replace />} />
-          <Route path="/contact" element={<Navigate to="/company" replace />} />
+          <Route path="/company" element={<Navigate to="/" replace />} />
+          <Route path="/about" element={<Navigate to="/" replace />} />
+          <Route path="/contact" element={<Navigate to="/" replace />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/lets-build" element={<LetsBuild />} />
           <Route path="/privacy" element={<Privacy />} />

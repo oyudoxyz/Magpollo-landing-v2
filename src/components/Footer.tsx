@@ -4,10 +4,9 @@ import { ContactReveal } from './ContactReveal';
 import { CONTACT } from '@/data/site';
 
 const LINKS = [
-  { to: '/company', label: 'Company' },
+  { to: '/lets-build', label: "Let's build" },
   { to: '/work', label: 'Proof of work' },
   { to: '/careers', label: 'Careers' },
-  { to: '/lets-build', label: "Let's build" },
   { to: '/privacy', label: 'Privacy' },
   { to: '/terms', label: 'Terms' },
 ];

@@ -17,7 +17,11 @@ export const CONTACT = {
   ],
 };
 
-export const NAV = [{ to: '/company', label: 'Company' }];
+/** Header links, in order. Let's build leads. */
+export const NAV = [
+  { to: '/lets-build', label: "Let's build", primary: true },
+  { to: '/work', label: 'Proof of work' },
+];
 
 /** The three things we sell, in the order a client meets them. No prices or timelines on the site. */
 export const OFFERS = [

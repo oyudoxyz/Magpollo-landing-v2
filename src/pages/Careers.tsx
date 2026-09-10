@@ -47,7 +47,7 @@ const Careers: React.FC = () => {
                 <div>
                   <p className="eyebrow mb-4">Received</p>
                   <p className="subhead mb-8 max-w-[440px]">Thank you. One of the founders will read it and reply, usually within a week.</p>
-                  <CtaLink to="/company">About the company</CtaLink>
+                  <CtaLink to="/">Back to the site</CtaLink>
                 </div>
               }
             />

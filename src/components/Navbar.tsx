@@ -47,13 +47,10 @@ const Navbar: React.FC = () => {
         {/* Desktop */}
         <nav aria-label="Primary" className={`hidden items-center gap-8 transition-opacity duration-300 md:flex ${dim}`}>
           {NAV.map((item) => (
-            <NavLink key={item.to} to={item.to} className="meta-link">
+            <NavLink key={item.to} to={item.to} className={`meta-link ${item.primary ? 'text-foreground' : ''}`}>
               {item.label}
             </NavLink>
           ))}
-          <NavLink to="/lets-build" className="meta-link text-foreground">
-            Let's build
-          </NavLink>
         </nav>
 
         {/* Mobile */}
@@ -85,7 +82,7 @@ const Navbar: React.FC = () => {
       >
         <div className="nav-sheet-handle" aria-hidden="true" />
         <nav aria-label="Primary" className="gutter pb-8 pt-6">
-          {[...NAV, { to: '/work', label: 'Proof of work' }, { to: '/careers', label: 'Careers' }, { to: '/lets-build', label: "Let's build" }].map((item, i) => (
+          {[...NAV, { to: '/careers', label: 'Careers' }].map((item, i) => (
             <NavLink key={item.to} to={item.to} className="nav-sheet-link press-row" tabIndex={sheetOpen ? 0 : -1}>
               <span>{item.label}</span>
               <span className="kicker">{String(i + 1).padStart(2, '0')}</span>
