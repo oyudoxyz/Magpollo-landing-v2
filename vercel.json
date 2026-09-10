@@ -1,10 +1,6 @@
 {
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/work", "destination": "/api/work/index" },
-    { "source": "/work/", "destination": "/api/work/index" },
-    { "source": "/work/custom-commerce", "destination": "/api/work/custom-commerce" },
-    { "source": "/work/custom-commerce/", "destination": "/api/work/custom-commerce" },
     { "source": "/((?!.*\\.[a-zA-Z0-9]+$).*)", "destination": "/index.html" }
   ],
   "buildCommand": "npm run build",

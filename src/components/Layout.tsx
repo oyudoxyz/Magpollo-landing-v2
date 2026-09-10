@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -8,6 +9,19 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const rulerRef = useRef<HTMLDivElement>(null);
+  const { pathname, hash } = useLocation();
+
+  // New page, top of page. Hash links scroll to their target after mount.
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        el.scrollIntoView({ block: 'start' });
+        return;
+      }
+    }
+    window.scrollTo({ top: 0 });
+  }, [pathname, hash]);
 
   useEffect(() => {
     let current = window.scrollY;

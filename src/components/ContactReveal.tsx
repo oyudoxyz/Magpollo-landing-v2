@@ -166,7 +166,7 @@ export const ContactReveal: React.FC<ContactRevealProps> = ({
             title={label}
             tabIndex={open ? 0 : -1}
             style={{ transitionDelay: `${open ? i * 45 : 0}ms` }}
-            className={`text-muted-foreground transition-all duration-300 ease-out hover:text-foreground ${
+            className={`text-muted-foreground transition-[transform,opacity,color] duration-200 ease-out [@media(hover:hover)]:hover:text-foreground ${
               open ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0'
             }`}
           >

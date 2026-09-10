@@ -61,8 +61,8 @@ export const ChoiceRows: React.FC<ChoiceRowsProps> = ({ options, selected, onTog
           aria-checked={isSelected}
           aria-label={option}
           onClick={() => onToggle(option)}
-          className={`flex w-full items-center justify-between gap-6 border-b border-border py-4 text-left text-base leading-snug transition-colors duration-200 first:border-t ${
-            isSelected ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+          className={`press-row flex w-full items-center justify-between gap-6 border-b border-border py-4 text-left text-base leading-snug first:border-t ${
+            isSelected ? 'text-foreground' : 'text-muted-foreground [@media(hover:hover)]:hover:text-foreground'
           }`}
         >
           <span>{option}</span>
@@ -186,8 +186,20 @@ const Dropdown: React.FC<DropdownProps> = ({
   disabled,
 }) => {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const wrapper = useRef<HTMLDivElement>(null);
+
+  // One frame after the panel mounts, flip the attribute so the fallback
+  // transition (browsers without @starting-style) plays from the start state.
+  useEffect(() => {
+    if (!open) {
+      setMounted(false);
+      return;
+    }
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, [open]);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -294,7 +306,8 @@ const Dropdown: React.FC<DropdownProps> = ({
             aria-multiselectable={multiple || undefined}
             aria-label={label}
             onKeyDown={onPanelKeyDown}
-            className="absolute left-0 right-0 top-full z-20 max-h-64 overflow-y-auto border border-border bg-card shadow-sm"
+            data-mounted={mounted}
+            className="dropdown-panel absolute left-0 right-0 top-full z-20 max-h-64 overflow-y-auto border border-border bg-card"
           >
             {options.map((option, i) => {
               const isSelected = selected.includes(option);
@@ -308,7 +321,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                   tabIndex={i === activeIndex ? 0 : -1}
                   onClick={() => pick(option)}
                   onMouseEnter={() => setActiveIndex(i)}
-                  className={`flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm transition-colors duration-150 focus:outline-none ${
+                  className={`flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm transition-colors duration-150 focus:outline-none focus-visible:outline-none ${
                     i === activeIndex ? 'bg-secondary' : ''
                   } ${isSelected ? 'text-foreground' : 'text-muted-foreground'}`}
                 >
@@ -443,7 +456,7 @@ export const FileDrop: React.FC<FileDropProps> = ({ files, setFiles, disabled })
             type="button"
             onClick={() => inputRef.current?.click()}
             disabled={disabled}
-            className="text-foreground underline underline-offset-4 transition-opacity hover:opacity-60"
+            className="text-foreground underline underline-offset-4 transition-opacity duration-200 [@media(hover:hover)]:hover:opacity-60"
           >
             browse
           </button>

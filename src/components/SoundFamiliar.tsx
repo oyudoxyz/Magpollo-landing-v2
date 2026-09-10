@@ -14,7 +14,7 @@ const SoundFamiliar: React.FC = () => {
   };
 
   return (
-    <Section id="problem" heading="Sound familiar?">
+    <Section id="problem" kicker="Where it breaks" heading="Sound familiar?">
       <ChoiceRows
         name="Sound familiar?"
         options={SYMPTOMS}
@@ -23,7 +23,7 @@ const SoundFamiliar: React.FC = () => {
       />
 
       <p className="mb-6 mt-10 max-w-[380px] text-base text-muted-foreground">
-        If any of those sound familiar, let's build.
+        Pick what applies. It carries over into the first step of the intake, so you only say it once.
       </p>
 
       <Link to="/lets-build" state={{ symptoms: selected }} className="cta">

@@ -1,0 +1,324 @@
+/* ---- Illustrations -------------------------------------------------------
+   Drawn in CSS, in the same material as the retro computer on the homepage:
+   warm putty body, darker bezel, near-black screen, soft inset highlights.
+   Nothing is an image. Each piece animates once, in view, then rests. */
+
+.illo {
+  --rc-body: #EAE4DA;
+  --rc-bezel: #D5CFC5;
+  --rc-screen: #1A1610;
+  --rc-screen-text: #C8C2B6;
+  --rc-key: #E2DCD2;
+  --rc-key-shadow: #C5BFB5;
+  --rc-paper: #FAF8F5;
+  width: 100%;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* ---- Dot-matrix printer: the approval log ------------------------------ */
+.retro-printer {
+  max-width: 420px;
+  position: relative;
+  padding-top: 132px;
+}
+
+.rp-paper {
+  position: absolute;
+  left: 50%;
+  /* Bottom edge sits behind the body, so the sheet reads as coming out of the slot. */
+  bottom: 44px;
+  width: 62%;
+  transform: translateX(-50%);
+  background: var(--rc-paper);
+  border-left: 1px solid #E5E0D8;
+  border-right: 1px solid #E5E0D8;
+  padding: 14px 18px 30px;
+  box-shadow: 0 -1px 0 #E5E0D8, 0 8px 24px -12px rgba(37, 31, 23, 0.25);
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Tractor-feed holes down both edges. */
+.rp-paper::before,
+.rp-paper::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  background-image: radial-gradient(circle, #DFD8CE 1.5px, transparent 1.7px);
+  background-size: 4px 10px;
+  background-repeat: repeat-y;
+}
+
+.rp-paper::before {
+  left: 5px;
+}
+
+.rp-paper::after {
+  right: 5px;
+}
+
+.rp-paper-title {
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #635D53;
+  padding-bottom: 5px;
+  margin-bottom: 6px;
+  border-bottom: 1px dashed #E5E0D8;
+}
+
+.rp-line {
+  display: grid;
+  grid-template-columns: 26px 1fr auto;
+  gap: 6px;
+  font-size: 7.5px;
+  line-height: 1.7;
+  color: #251F17;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(3px);
+}
+
+.rp-line time {
+  color: #635D53;
+}
+
+.rp-line .rp-status {
+  color: #635D53;
+}
+
+.rp-line .rp-status.is-approved {
+  color: #251F17;
+  font-weight: 600;
+}
+
+.rp-line .rp-status.is-held {
+  color: #CE4257;
+}
+
+/* Lines print one at a time once the piece is in view. */
+.retro-printer.is-in-view .rp-line {
+  animation: rp-print 260ms var(--ease-out) forwards;
+}
+
+.retro-printer.is-in-view .rp-line:nth-child(2) { animation-delay: 300ms; }
+.retro-printer.is-in-view .rp-line:nth-child(3) { animation-delay: 700ms; }
+.retro-printer.is-in-view .rp-line:nth-child(4) { animation-delay: 1100ms; }
+.retro-printer.is-in-view .rp-line:nth-child(5) { animation-delay: 1500ms; }
+.retro-printer.is-in-view .rp-line:nth-child(6) { animation-delay: 1900ms; }
+
+@keyframes rp-print {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rp-body {
+  position: relative;
+  background: var(--rc-body);
+  border-radius: 10px 10px 4px 4px;
+  padding: 14px 18px 12px;
+  box-shadow:
+    0 1px 0 0 #f0ebe3 inset,
+    0 -1px 0 0 #c5bfb5 inset,
+    0 8px 30px -8px hsl(var(--fg) / 0.12);
+  z-index: 2;
+}
+
+.rp-slot {
+  height: 6px;
+  background: var(--rc-screen);
+  border-radius: 2px;
+  margin: 0 8px 12px;
+  box-shadow: 0 1px 0 #f0ebe3, 0 1px 2px hsl(var(--fg) / 0.4) inset;
+}
+
+.rp-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rp-panel-label {
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #635D53;
+}
+
+.rp-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.rp-button {
+  width: 22px;
+  height: 10px;
+  background: var(--rc-key);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 var(--rc-key-shadow);
+}
+
+.rp-led {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: hsl(var(--mark));
+  box-shadow: 0 0 0 2px hsl(var(--mark) / 0.15);
+}
+
+.rp-chin {
+  background: var(--rc-body);
+  border-radius: 0 0 6px 6px;
+  height: 10px;
+  margin: 0 10px;
+  box-shadow: 0 -1px 0 0 #d5cfc5, 0 4px 12px -4px hsl(var(--fg) / 0.08);
+}
+
+/* ---- Flip clock: five weeks to launch ---------------------------------- */
+.retro-clock {
+  max-width: 420px;
+}
+
+.fc-body {
+  background: var(--rc-body);
+  border-radius: 12px 12px 4px 4px;
+  padding: 18px 20px 14px;
+  box-shadow:
+    0 1px 0 0 #f0ebe3 inset,
+    0 -1px 0 0 #c5bfb5 inset,
+    0 8px 30px -8px hsl(var(--fg) / 0.12);
+}
+
+.fc-face {
+  background: var(--rc-bezel);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px hsl(var(--fg) / 0.1) inset;
+}
+
+.fc-cards {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  perspective: 600px;
+}
+
+.fc-card {
+  position: relative;
+  width: 84px;
+  height: 96px;
+  background: var(--rc-screen);
+  border-radius: 4px;
+  color: var(--rc-screen-text);
+  font-size: 52px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 0 #0d0b08, 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+}
+
+.fc-card.is-label {
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  color: #8f887c;
+}
+
+/* The hinge line through the middle of a flip card. */
+.fc-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 0 rgba(200, 194, 182, 0.08);
+}
+
+.fc-digit {
+  display: block;
+  transition: transform var(--dur-ui) var(--ease-out), opacity var(--dur-ui) var(--ease-out);
+}
+
+.fc-digit.is-flipping {
+  transform: translateY(-40%) scaleY(0.6);
+  opacity: 0;
+}
+
+.fc-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 6px 4px 0;
+  border-top: 1px solid hsl(var(--muted-ink) / 0.25);
+}
+
+.fc-step {
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #635D53;
+  transition: color var(--dur-fast) ease;
+}
+
+.fc-step.is-current {
+  color: #251F17;
+  font-weight: 600;
+}
+
+.fc-feet {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.fc-foot {
+  width: 28px;
+  height: 6px;
+  background: var(--rc-bezel);
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 2px 6px -2px hsl(var(--fg) / 0.15);
+}
+
+@media (max-width: 480px) {
+  .retro-printer,
+  .retro-clock {
+    max-width: 320px;
+  }
+
+  .rp-paper {
+    width: 70%;
+  }
+
+  .fc-card {
+    width: 68px;
+    height: 80px;
+    font-size: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rp-line,
+  .retro-printer .rp-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .fc-digit,
+  .fc-digit.is-flipping {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}

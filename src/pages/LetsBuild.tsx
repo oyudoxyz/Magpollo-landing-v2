@@ -10,9 +10,10 @@ import {
   TextAreaField,
   FileDrop,
 } from "@/components/intake";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import sendMail from "@/utils/sendMail";
 import { SYMPTOMS } from "@/data/symptoms";
+import { useMeta } from "@/hooks/use-meta";
 
 /* ---- Question data -------------------------------------------------------- */
 
@@ -122,9 +123,8 @@ const StepShell: React.FC<{
 }> = ({ step, aside, children }) => (
   <motion.div
     initial={{ opacity: 0, y: 12 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -8 }}
-    transition={{ duration: 0.35, ease }}
+    animate={{ opacity: 1, y: 0, transition: { duration: 0.25, ease } }}
+    exit={{ opacity: 0, y: -6, transition: { duration: 0.15, ease } }}
     className="editorial-grid"
   >
     <div className="lg:sticky lg:top-28 lg:self-start">
@@ -158,7 +158,7 @@ const SentScreen: React.FC<{ name: string }> = ({ name }) => (
       <p className="subhead mb-8 max-w-[440px]">
         Thanks{name ? `, ${name.split(" ")[0]}` : ""}. We read these ourselves
         rather than routing them into a queue. Expect a reply within one
-        business day — usually with a question or two about the part that
+        business day, usually with a question or two about the part that
         sounded most expensive.
       </p>
 
@@ -189,7 +189,11 @@ interface LetsBuildLocationState {
 }
 
 const LetsBuild: React.FC = () => {
-  const { toast } = useToast();
+  useMeta({
+    title: "Let's build",
+    description: "Two short steps: where the work breaks, and how to reach you. We reply within one business day.",
+    path: "/lets-build",
+  });
   const location = useLocation();
   const preselected =
     (location.state as LetsBuildLocationState | null)?.symptoms ?? [];
@@ -291,12 +295,10 @@ const LetsBuild: React.FC = () => {
       setIsSent(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      toast({
-        title: "That did not send",
+      toast.error("That did not send", {
         description:
           result.message ||
           "Please try again, or write to salesteam@magpollo.com and we will pick it up there.",
-        variant: "destructive",
       });
     }
   };
@@ -430,7 +432,7 @@ const LetsBuild: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => goTo(step - 1)}
-                    className="cta cta-muted"
+                    className="cta cta-muted press"
                     disabled={isSubmitting}
                   >
                     Back
@@ -445,7 +447,7 @@ const LetsBuild: React.FC = () => {
                   <button
                     type="button"
                     onClick={goNext}
-                    className={`cta ${!stepIsValid ? "opacity-40" : ""}`}
+                    className={`cta press ${!stepIsValid ? "opacity-40" : ""}`}
                   >
                     Continue
                   </button>
@@ -453,7 +455,7 @@ const LetsBuild: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`cta ${!stepIsValid || isSubmitting ? "opacity-40" : ""}`}
+                    className={`cta press ${!stepIsValid || isSubmitting ? "opacity-40" : ""}`}
                   >
                     {isSubmitting ? "Sending…" : "Send it"}
                   </button>

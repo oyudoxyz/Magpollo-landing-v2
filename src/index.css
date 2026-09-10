@@ -13,15 +13,29 @@
     --muted-ink: 37 9% 36%;  /* #635D53  muted    4.61:1 — clears AA for body text */
     --rule: 34 8% 65%;       /* #ACA69E  hairline 1.71:1 */
     --mark: 351 59% 53%;     /* #CE4257 — reserved for the logo mark */
+    --surface: 30 33% 97%;   /* #FAF8F5  document paper: cards, callouts */
+    --work: 0 0% 100%;       /* #FFFFFF  where the work happens: tables, forms */
+
+    /* Motion. One house easing for reveals; three Emil Kowalski curves for UI:
+       ease-out for anything entering or exiting, ease-in-out for things that
+       move while on screen, the drawer curve for sheets. UI stays under 300ms. */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --dur-press: 160ms;
+    --dur-fast: 200ms;
+    --dur-ui: 250ms;
+    --dur-reveal: 600ms;
 
     /* shadcn tokens mapped onto the palette above */
     --background: var(--bg);
     --foreground: var(--fg);
 
-    --card: 35 22% 88%;
+    --card: var(--surface);
     --card-foreground: var(--fg);
 
-    --popover: 35 22% 88%;
+    --popover: var(--surface);
     --popover-foreground: var(--fg);
 
     /* Primary is inverted: ink surface, paper text */
@@ -157,8 +171,10 @@
     border-bottom: 1px solid hsl(var(--fg));
   }
 
-  .cta:hover {
-    opacity: 0.6;
+  @media (hover: hover) and (pointer: fine) {
+    .cta:hover {
+      opacity: 0.6;
+    }
   }
 
   .cta-muted {
@@ -166,17 +182,81 @@
     border-bottom-color: hsl(var(--muted-ink));
   }
 
-  .cta-muted:hover {
-    @apply text-foreground;
-    border-bottom-color: hsl(var(--fg));
-    opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    .cta-muted:hover {
+      @apply text-foreground;
+      border-bottom-color: hsl(var(--fg));
+      opacity: 1;
+    }
   }
 
   /* Tracked-out uppercase nav / meta link */
   .meta-link {
-    @apply uppercase text-muted-foreground transition-colors duration-200 hover:text-foreground;
+    @apply uppercase text-muted-foreground transition-colors duration-200;
     font-size: 11px;
     letter-spacing: 0.15em;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .meta-link:hover {
+      @apply text-foreground;
+    }
+  }
+
+  /* Current page in the nav: ink, not muted. */
+  .meta-link[aria-current='page'] {
+    @apply text-foreground;
+  }
+
+  /* Mono kicker for indices, dates, figures, tags — uppercase and tracked. */
+  .kicker {
+    @apply font-mono uppercase text-muted-foreground;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    line-height: 1.4;
+  }
+
+  /* The one filled control: closing CTA in a form, primary action in a panel. */
+  .btn-ink {
+    @apply inline-flex h-11 items-center justify-center bg-foreground px-5 text-background;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background-color var(--dur-fast) ease, transform var(--dur-press) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ink:hover {
+      background-color: #3a3226;
+    }
+  }
+
+  .btn-ink:disabled {
+    background-color: hsl(var(--rule));
+    color: hsl(var(--bg));
+    cursor: not-allowed;
+  }
+
+  /* Outlined counterpart. */
+  .btn-line {
+    @apply inline-flex h-11 items-center justify-center border border-border bg-transparent px-5 text-foreground;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: border-color var(--dur-fast) ease, transform var(--dur-press) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-line:hover {
+      border-color: hsl(var(--fg));
+    }
+  }
+
+  /* Card on paper: document surface, hairline, square. No shadow. */
+  .paper-card {
+    @apply border border-border bg-card;
   }
 
   /* ---- Numbered list used by "Sound familiar?" and friends ------------- */
@@ -192,9 +272,31 @@
   }
 
   .list-index {
-    @apply shrink-0 text-muted-foreground tabular-nums;
+    @apply shrink-0 font-mono text-muted-foreground tabular-nums;
     font-size: 10px;
     letter-spacing: 0.08em;
+  }
+
+  /* Definition rows: term on the left in mono, description on the right. */
+  .def-list > div {
+    @apply grid gap-2 border-b border-border py-5 sm:grid-cols-[160px_1fr] sm:gap-8;
+  }
+
+  .def-list > div:first-child {
+    @apply border-t;
+  }
+
+  .def-list dt {
+    @apply font-mono uppercase text-muted-foreground;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    line-height: 1.8;
+  }
+
+  .def-list dd {
+    @apply text-foreground;
+    font-size: 15px;
+    line-height: 1.55;
   }
 }
 
@@ -615,7 +717,7 @@
 
   /* Hide web-only UI frame elements */
   header.absolute,
-  footer.gutter,
+  footer.site-footer,
   .page-ruler,
   .guides-ruler,
   .print\:hidden {
