@@ -26,14 +26,6 @@ export const OFFERS = [
   { index: '03', name: 'Care', summary: 'We keep it running: monitoring, fixes, updates, and a monthly look at whether it is still doing its job.' },
 ];
 
-/** Founding team and starting lanes, from the Team Operating Policy. */
-export const TEAM = [
-  { name: 'Charles Chukwuma Oyudo', lane: 'Direction, sales, product' },
-  { name: 'Haleem Bello', lane: 'Engineering, architecture' },
-  { name: 'Utieyin Ogedegbe', lane: 'Marketing, brand' },
-  { name: 'Malik Roufay', lane: 'Engineering, delivery' },
-];
-
 /** The two systems we can walk a client through, on request. */
 export const PROOF = [
   {

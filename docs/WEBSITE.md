@@ -7,7 +7,7 @@ Updated 2026-09-10 with the company-site rebuild.
 | Route | Page | Modules |
 |---|---|---|
 | `/` | Home | Hero (Cormorant, the only place), Sound familiar, What we build (three steps on a white plate, no prices or timelines), Proof (one ink band, walkthrough on request) |
-| `/company` | Company | Header, founding team on a white plate, details (absorbs contact) |
+| `/company` | Company | Header and details (absorbs contact) |
 | `/careers` | Careers | Header, four lanes, form on a white plate |
 | `/work` | Proof of work | Header with the printer illustration, two one-line summaries, request form. Old `/work/*` URLs redirect here |
 | `/lets-build` | Intake | Two-step intake |
@@ -50,6 +50,5 @@ No client names appear on illustrations. Record IDs only.
 ## Decisions to confirm
 
 - No prices or timelines on the site, by decision.
-- Founding team names and lanes are published on `/company`.
 - Careers and walkthrough requests go to `salesteam@magpollo.com` through the existing `/api/send_mail` endpoint.
 - Privacy and Terms are written plainly and need a legal read before launch.
