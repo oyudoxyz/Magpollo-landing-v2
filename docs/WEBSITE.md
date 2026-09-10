@@ -16,6 +16,14 @@ Updated 2026-09-10 with the company-site rebuild.
 
 ## Grounds
 
+Gradients are allowed. An earlier version of this document banned them outright;
+that rule was invented in the design-system handoff, not by the brand, and the site
+had already broken it six times (the gutter ruler and its mask, the scanlines in the
+retro computer, the tractor-feed holes in the printer). The real intent behind it —
+no decorative colour washes standing in for an idea — is worth keeping. A gradient
+that does a job is fine.
+
+
 Paper is the page. White plates hold anything product-like: the offer, forms, the team list. One ink band per page at most, for the line that should land hardest. Cormorant appears once on the whole site, in the home hero; every other heading is Jakarta (`.title`, `.headline`).
 
 ## Case studies
