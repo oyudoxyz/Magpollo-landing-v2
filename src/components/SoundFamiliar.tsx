@@ -14,7 +14,7 @@ const SoundFamiliar: React.FC = () => {
   };
 
   return (
-    <Section id="problem" kicker="Where it breaks" heading="Sound familiar?">
+    <Section id="problem" heading="Sound familiar?">
       <ChoiceRows
         name="Sound familiar?"
         options={SYMPTOMS}

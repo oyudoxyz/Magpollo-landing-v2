@@ -4,21 +4,20 @@ Updated 2026-09-10 with the company-site rebuild.
 
 ## Site map
 
-| Route | Page | Purpose |
+| Route | Page | Modules |
 |---|---|---|
-| `/` | Home | Hero, Sound familiar, What we build, Five weeks, Principles, Who we work with, Proof on request, closing CTA |
-| `/systems` | Systems | Blueprint, System Sprint, Care Plan in detail; standard scope; optional modules; definition of done |
-| `/how-we-work` | How we work | The five-stage path, the Sprint week by week, what the client brings, how success is measured |
-| `/company` | Company | What we are and are not, founding team and lanes, operating rules, legal details |
-| `/careers` | Careers | Lanes, internship notice, terms, expression-of-interest form |
-| `/contact` | Contact | Email, phone, social, links to intake / walkthrough / careers |
-| `/work` | Proof of work | Case studies are shared on request. Two summaries and a request form. Old `/work/*` URLs redirect here |
-| `/lets-build` | Intake | Two-step intake (unchanged flow, motion tightened) |
+| `/` | Home | Hero (Cormorant, the only place), Sound familiar, What we build (three steps on a white plate, no prices or timelines), Proof (one ink band, walkthrough on request) |
+| `/company` | Company | Header, founding team on a white plate, details (absorbs contact) |
+| `/careers` | Careers | Header, four lanes, form on a white plate |
+| `/work` | Proof of work | Header with the printer illustration, two one-line summaries, request form. Old `/work/*` URLs redirect here |
+| `/lets-build` | Intake | Two-step intake |
 | `/privacy`, `/terms` | Legal | Plain-language privacy and terms |
 
-Copy is sourced from MAGPOLLO HQ in Notion: Founding Brief, Company One-Liner and Messaging,
-Starter Offer, Paid Blueprint, Care Plan, Sales Playbook, Competitive Positioning, Team Operating
-Policy. `src/data/site.ts` holds it in one place.
+`/systems`, `/how-we-work` and `/contact` were built in v1 and cut in v2 as repetition; they redirect.
+
+## Grounds
+
+Paper is the page. White plates hold anything product-like: the offer, forms, the team list. One ink band per page at most, for the line that should land hardest. Cormorant appears once on the whole site, in the home hero; every other heading is Jakarta (`.title`, `.headline`).
 
 ## Case studies
 
@@ -44,14 +43,13 @@ Tokens in `src/index.css`; rules in `src/styles/motion.css`.
 
 CSS-drawn, same material as the retro computer: `src/components/illustrations/`.
 
-- `RetroPrinter` — dot-matrix printer printing the approval log (human approval in code).
-- `RetroFlipClock` — desk flip-clock counting the five weeks to launch.
+- `RetroPrinter` — dot-matrix printer printing the approval log, on the proof-of-work page.
 
 No client names appear on illustrations. Record IDs only.
 
 ## Decisions to confirm
 
-- Prices shown: Blueprint $3,500; Care Plan from $1,000/month; Sprint "fixed price, quoted after the Blueprint". Sprint pricing is deliberately not shown.
+- No prices or timelines on the site, by decision.
 - Founding team names and lanes are published on `/company`.
 - Careers and walkthrough requests go to `salesteam@magpollo.com` through the existing `/api/send_mail` endpoint.
 - Privacy and Terms are written plainly and need a legal read before launch.

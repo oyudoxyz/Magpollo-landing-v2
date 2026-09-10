@@ -39,20 +39,14 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, ease, delay: 0.2 }}
         >
           <p className="subhead mb-8 max-w-[440px]">
-            You already have the software, but operating it eats your time: the outreach, the
-            reminder, the document, the thing nobody owns. Magpollo is a product systems studio.
-            We diagnose one workflow, keep the tools that work, and build the missing system
-            around how you actually operate.
+            You already have the software. Operating it eats your time: the outreach, the
+            reminder, the document, the thing nobody owns. We build the missing part, around how
+            you actually work.
           </p>
 
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-            <Link to="/lets-build" className="cta">
-              Let's build
-            </Link>
-            <Link to="/systems" className="cta cta-muted">
-              What we build
-            </Link>
-          </div>
+          <Link to="/lets-build" className="cta">
+            Let's build
+          </Link>
         </motion.div>
       </div>
     </section>

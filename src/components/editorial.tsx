@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
  * Shared primitives for the editorial layout language: a two-column grid with a
  * headline on the left and content on the right, hairline rules between
  * sections, numbered lists, and the page header every inner page opens with.
+ * Cormorant is the hero's alone; everything here sets headings in Jakarta.
  */
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -72,11 +73,11 @@ export const Section: React.FC<SectionProps> = ({
       <Reveal>
         <div className="lg:sticky lg:top-28">
           {kicker && <p className="kicker mb-5">{kicker}</p>}
-          <h2 className="section-head">
+          <h2 className="headline">
             <PlusMarker />
             {heading}
           </h2>
-          {intro && <p className="mt-6 max-w-[380px] text-base leading-relaxed text-muted-foreground">{intro}</p>}
+          {intro && <p className="mt-5 max-w-[380px] text-base leading-relaxed text-muted-foreground">{intro}</p>}
         </div>
       </Reveal>
       <Reveal delay={0.08}>{children}</Reveal>
@@ -107,38 +108,48 @@ interface PageHeaderProps {
   standfirst?: ReactNode;
   /** Actions rendered under the standfirst, e.g. a CtaLink. */
   actions?: ReactNode;
+  /** Something to sit in the right column instead of a standfirst, e.g. an illustration. */
+  aside?: ReactNode;
 }
 
 /**
- * Every inner page opens the way the homepage does: kicker, display headline
- * on the left, standfirst on the right. Enter animation matches the hero.
+ * Inner pages open with a kicker and a Jakarta title on the left, a standfirst
+ * (or an aside) on the right. Enter animation matches the hero.
  */
-export const PageHeader: React.FC<PageHeaderProps> = ({ kicker, title, standfirst, actions }) => (
+export const PageHeader: React.FC<PageHeaderProps> = ({ kicker, title, standfirst, actions, aside }) => (
   <section className="gutter">
-    <div className="editorial-grid pb-16 pt-12 md:pb-24 md:pt-20">
+    <div className="editorial-grid pb-12 pt-10 md:pb-16 md:pt-16">
       <div className="flex flex-col">
         <motion.p className="eyebrow mb-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, ease }}>
           {kicker}
         </motion.p>
         <motion.h1
-          className="display"
+          className="title"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease, delay: 0.08 }}
         >
           {title}
         </motion.h1>
+        {standfirst && aside && <p className="subhead mt-6 max-w-[440px]">{standfirst}</p>}
+        {actions && aside && <div className="mt-8">{actions}</div>}
       </div>
-      {(standfirst || actions) && (
-        <motion.div
-          className="flex flex-col lg:pt-24"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease, delay: 0.2 }}
-        >
-          {standfirst && <p className="subhead mb-8 max-w-[440px]">{standfirst}</p>}
-          {actions}
+      {aside ? (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease, delay: 0.2 }}>
+          {aside}
         </motion.div>
+      ) : (
+        (standfirst || actions) && (
+          <motion.div
+            className="flex flex-col lg:pt-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease, delay: 0.2 }}
+          >
+            {standfirst && <p className="subhead mb-8 max-w-[440px]">{standfirst}</p>}
+            {actions}
+          </motion.div>
+        )
       )}
     </div>
   </section>
@@ -181,33 +192,9 @@ interface ProseProps {
   className?: string;
 }
 
-/** Long-form copy at a 66ch measure: privacy, terms, the company story. */
+/** Long-form copy at a 66ch measure: privacy, terms. */
 export const Prose: React.FC<ProseProps> = ({ children, className = '' }) => (
   <div className={`max-w-[66ch] text-[15px] leading-[1.6] text-foreground [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:font-sans [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2:first-child]:mt-0 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1.5 [&_a]:underline [&_a]:underline-offset-4 ${className}`}>
     {children}
   </div>
-);
-
-interface ClosingCtaProps {
-  heading?: ReactNode;
-  body?: ReactNode;
-  to?: string;
-  label?: ReactNode;
-}
-
-/** The section every page ends on: one line, one link. */
-export const ClosingCta: React.FC<ClosingCtaProps> = ({
-  heading = (
-    <>
-      Tell us where it <span className="accented">breaks</span>.
-    </>
-  ),
-  body = 'Two short steps. We read every one ourselves and reply within one business day, usually with a question or two about the part that sounds most expensive.',
-  to = '/lets-build',
-  label = "Let's build",
-}) => (
-  <Section heading={heading}>
-    <p className="mb-8 max-w-[440px] text-base leading-relaxed text-muted-foreground">{body}</p>
-    <CtaLink to={to}>{label}</CtaLink>
-  </Section>
 );

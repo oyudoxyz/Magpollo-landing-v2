@@ -136,6 +136,45 @@
     letter-spacing: -0.02em;
   }
 
+  /* Page title on inner pages. Jakarta, not Cormorant: the serif is the hero's alone. */
+  .title {
+    font-size: clamp(2rem, 4.2vw, 3rem);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  /* Section headline. */
+  .headline {
+    font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  /* White plate: where the work happens. Product-like content sits on it. */
+  .plate {
+    background: hsl(var(--work));
+    border: 1px solid hsl(var(--rule));
+  }
+
+  /* Ink band: one per page, for the line that should land hardest. */
+  .band-ink {
+    background: hsl(var(--fg));
+    color: hsl(var(--bg));
+  }
+
+  .band-ink .cta {
+    color: hsl(var(--bg));
+    border-bottom-color: hsl(var(--bg));
+  }
+
+  .band-ink .kicker {
+    color: hsl(var(--bg) / 0.6);
+  }
+
   /* Standfirst / lede paragraph beside a headline */
   .subhead {
     font-size: clamp(1rem, 1.6vw, 1.125rem);

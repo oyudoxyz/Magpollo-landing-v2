@@ -4,11 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
-import Systems from "./pages/Systems";
-import HowWeWork from "./pages/HowWeWork";
 import Company from "./pages/Company";
 import Careers from "./pages/Careers";
-import Contact from "./pages/Contact";
 import Work from "./pages/Work";
 import LetsBuild from "./pages/LetsBuild";
 import Privacy from "./pages/Privacy";
@@ -28,12 +25,12 @@ const App = () => (
       <Router>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/systems" element={<Systems />} />
-          <Route path="/how-we-work" element={<HowWeWork />} />
+          <Route path="/systems" element={<Navigate to="/#systems" replace />} />
+          <Route path="/how-we-work" element={<Navigate to="/#systems" replace />} />
           <Route path="/company" element={<Company />} />
           <Route path="/about" element={<Navigate to="/company" replace />} />
+          <Route path="/contact" element={<Navigate to="/company" replace />} />
           <Route path="/careers" element={<Careers />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/lets-build" element={<LetsBuild />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />

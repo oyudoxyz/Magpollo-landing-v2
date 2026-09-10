@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
       >
         <div className="nav-sheet-handle" aria-hidden="true" />
         <nav aria-label="Primary" className="gutter pb-8 pt-6">
-          {[...NAV, { to: '/lets-build', label: "Let's build" }].map((item, i) => (
+          {[...NAV, { to: '/work', label: 'Proof of work' }, { to: '/careers', label: 'Careers' }, { to: '/lets-build', label: "Let's build" }].map((item, i) => (
             <NavLink key={item.to} to={item.to} className="nav-sheet-link press-row" tabIndex={sheetOpen ? 0 : -1}>
               <span>{item.label}</span>
               <span className="kicker">{String(i + 1).padStart(2, '0')}</span>
