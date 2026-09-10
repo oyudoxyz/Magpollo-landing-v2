@@ -48,8 +48,8 @@ const Proof: React.FC = () => (
       <Reveal>
         <p className="kicker mb-5">Proof of work</p>
         <p className="headline max-w-[600px]">
-          A system we built runs daily inside a Fortune 500 sales organisation. Reps spend less time sourcing, drafting
-          and chasing, and more time selling.
+          Our systems run every day inside real businesses: a Fortune 500 sales organisation, a made-to-order commerce
+          business. Both kept working while we built.
         </p>
       </Reveal>
       <Reveal delay={0.08} className="md:justify-self-end">

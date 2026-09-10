@@ -22,7 +22,7 @@ const Work: React.FC = () => {
       <PageHeader
         kicker="Proof of work"
         title="Shown, not published."
-        standfirst="Our case studies describe real workflows in detail: what the reps did by hand, what the system took on, what changed. We walk prospective clients through them on a call rather than hosting them here."
+        standfirst="Our case studies describe real workflows in detail: what people did by hand, what the system took on, what changed. We walk prospective clients through them on a call rather than hosting them here."
         aside={
           <div className="flex justify-center lg:justify-end">
             <RetroPrinter />
