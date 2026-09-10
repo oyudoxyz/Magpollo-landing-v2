@@ -39,7 +39,7 @@ export const PROOF = [
   {
     id: 'prospecting-engine',
     title: 'Prospecting engine for field sales',
-    summary: 'Sourcing, drafting, a human approval gate on every send, follow-up and reply triage. In daily production inside a Fortune 500 environment.',
+    summary: 'Sourcing, drafting, a human approval gate on every send, follow-up and reply triage. In daily use inside a Fortune 500 sales organisation; reps spend more of the day selling.',
   },
   {
     id: 'custom-commerce',

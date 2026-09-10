@@ -16,7 +16,7 @@ const Company: React.FC = () => {
       <PageHeader
         kicker="Company"
         title="A studio, not an agency."
-        standfirst="We built our first system for our own use inside a Fortune 500 sales organisation, under rules that forbade auto-sending. It has run daily since. Magpollo exists to build that kind of system for firms that cannot hire a product team to do it."
+        standfirst="We built a system for use inside a Fortune 500 sales organisation. Reps spent less time sourcing, drafting and chasing, and more time selling and talking to customers. It has run daily since. Magpollo exists to build that kind of system for firms that cannot hire a product team to do it."
         actions={<CtaLink to="/lets-build">Let's build</CtaLink>}
       />
 

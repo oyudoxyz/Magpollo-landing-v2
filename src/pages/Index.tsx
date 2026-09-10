@@ -47,12 +47,13 @@ const Proof: React.FC = () => (
     <div className="gutter grid gap-8 py-14 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-end md:py-20">
       <Reveal>
         <p className="kicker mb-5">Proof of work</p>
-        <p className="headline max-w-[560px]">
-          Our core system runs daily inside a Fortune 500 environment, under a policy that forbids auto-sending.
+        <p className="headline max-w-[600px]">
+          A system we built runs daily inside a Fortune 500 sales organisation. Reps spend less time sourcing, drafting
+          and chasing, and more time selling.
         </p>
       </Reveal>
       <Reveal delay={0.08} className="md:justify-self-end">
-        <p className="mb-5 max-w-[300px] text-[15px] leading-relaxed text-background/70">
+        <p className="muted mb-5 max-w-[300px] text-[15px] leading-relaxed">
           Case studies are shown to prospective clients, not published.
         </p>
         <Link to="/work" className="cta">

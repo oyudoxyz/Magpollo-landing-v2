@@ -163,16 +163,22 @@
   /* Ink band: one per page, for the line that should land hardest. */
   .band-ink {
     background: hsl(var(--fg));
-    color: hsl(var(--bg));
+    /* Document paper, not page paper: warm paper on warm ink reads muddy. */
+    color: hsl(var(--surface));
   }
 
   .band-ink .cta {
-    color: hsl(var(--bg));
-    border-bottom-color: hsl(var(--bg));
+    color: hsl(var(--surface));
+    border-bottom-color: hsl(var(--surface));
   }
 
+  /* The one accent on the page: the kicker in the mark red. */
   .band-ink .kicker {
-    color: hsl(var(--bg) / 0.6);
+    color: hsl(var(--mark));
+  }
+
+  .band-ink .muted {
+    color: hsl(var(--rule));
   }
 
   /* Standfirst / lede paragraph beside a headline */
