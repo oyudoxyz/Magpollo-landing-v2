@@ -28,14 +28,14 @@ const Footer: React.FC = () => {
             </Link>
           ))}
         </nav>
-        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+        <address className="flex flex-wrap gap-x-6 gap-y-2 text-sm not-italic text-muted-foreground">
           <a href={`mailto:${CONTACT.email}`} className="transition-colors duration-200 hover:text-foreground">
             {CONTACT.email}
           </a>
           <a href={CONTACT.phoneHref} className="transition-colors duration-200 hover:text-foreground">
             {CONTACT.phone}
           </a>
-        </div>
+        </address>
       </div>
 
       {/* items-start: the contact strip hangs off the trigger's right edge, so the trigger must stay intrinsic width */}

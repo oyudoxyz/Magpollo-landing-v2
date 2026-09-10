@@ -2,16 +2,13 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import { PageHeader, Prose } from '@/components/editorial';
 import { useMeta } from '@/hooks/use-meta';
+import { PAGES } from '@/seo';
 import { CONTACT } from '@/data/site';
 
 const UPDATED = '2026-09-10';
 
 const Terms: React.FC = () => {
-  useMeta({
-    title: 'Terms',
-    description: 'Terms of use for magpollo.com, and how engagements with Magpollo Corp are contracted.',
-    path: '/terms',
-  });
+  useMeta(PAGES.terms);
 
   return (
     <Layout>

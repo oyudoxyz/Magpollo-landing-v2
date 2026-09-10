@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import sendMail from "@/utils/sendMail";
 import { SYMPTOMS } from "@/data/symptoms";
 import { useMeta } from "@/hooks/use-meta";
+import { PAGES } from "@/seo";
 
 /* ---- Question data -------------------------------------------------------- */
 
@@ -189,11 +190,7 @@ interface LetsBuildLocationState {
 }
 
 const LetsBuild: React.FC = () => {
-  useMeta({
-    title: "Let's build",
-    description: "Two short steps: where the work breaks, and how to reach you. We reply within one business day.",
-    path: "/lets-build",
-  });
+  useMeta(PAGES.letsBuild);
   const location = useLocation();
   const preselected =
     (location.state as LetsBuildLocationState | null)?.symptoms ?? [];

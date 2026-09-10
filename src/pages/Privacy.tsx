@@ -2,16 +2,13 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import { PageHeader, Prose } from '@/components/editorial';
 import { useMeta } from '@/hooks/use-meta';
+import { PAGES } from '@/seo';
 import { CONTACT } from '@/data/site';
 
 const UPDATED = '2026-09-10';
 
 const Privacy: React.FC = () => {
-  useMeta({
-    title: 'Privacy',
-    description: 'How Magpollo Corp collects, uses and protects the information you share through magpollo.com.',
-    path: '/privacy',
-  });
+  useMeta(PAGES.privacy);
 
   return (
     <Layout>

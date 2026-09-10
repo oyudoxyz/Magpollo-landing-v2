@@ -5,14 +5,11 @@ import RetroPrinter from '@/components/illustrations/RetroPrinter';
 import { PageHeader, CtaLink, Reveal } from '@/components/editorial';
 import { SimpleForm } from '@/components/SimpleForm';
 import { useMeta } from '@/hooks/use-meta';
+import { PAGES } from '@/seo';
 import { PROOF } from '@/data/site';
 
 const Work: React.FC = () => {
-  useMeta({
-    title: 'Proof of work',
-    description: 'Magpollo case studies are shown to prospective clients on request: a prospecting engine in daily production inside a Fortune 500 environment, and a custom commerce system.',
-    path: '/work',
-  });
+  useMeta(PAGES.work);
   const location = useLocation();
   const preselected = (location.state as { system?: string } | null)?.system;
   const initialSystem = PROOF.find((p) => p.id === preselected)?.title ?? '';

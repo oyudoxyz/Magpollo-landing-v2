@@ -1,6 +1,4 @@
-import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import FormToEmail from '../emails/FormToEmail';
+import { formToEmailHtml } from '../emails/formToEmailHtml';
 
 export interface IntakeDetail {
   label: string;
@@ -26,17 +24,15 @@ interface SendMailProps {
 export const sendMail = async (formData: SendMailProps): Promise<{ success: boolean; message?: string }> => {
   try {
     // Create message data
-    const emailHtml = renderToStaticMarkup(
-      React.createElement(FormToEmail, {
-        name: formData.name,
-        email: formData.email,
-        company: formData.company,
-        message: formData.message,
-        selectedServices: formData.selectedServices,
-        details: formData.details,
-        files: formData.files?.map(file => ({ name: file.name }))
-      })
-    );
+    const emailHtml = formToEmailHtml({
+      name: formData.name,
+      email: formData.email,
+      company: formData.company,
+      message: formData.message,
+      selectedServices: formData.selectedServices,
+      details: formData.details,
+      files: formData.files?.map((file) => ({ name: file.name })),
+    });
 
     // Create form data for sending files
     const data = new FormData();

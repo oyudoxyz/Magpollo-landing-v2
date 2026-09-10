@@ -6,6 +6,7 @@ import RetroComputer from '@/components/RetroComputer';
 import SoundFamiliar from '@/components/SoundFamiliar';
 import { Reveal, CtaLink } from '@/components/editorial';
 import { useMeta } from '@/hooks/use-meta';
+import { PAGES } from '@/seo';
 import { OFFERS } from '@/data/site';
 
 /* ---- What we build: three steps on a white plate --------------------------- */
@@ -47,10 +48,10 @@ const Proof: React.FC = () => (
     <div className="gutter grid gap-8 py-14 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-end md:py-20">
       <Reveal>
         <p className="kicker mb-5">Proof of work</p>
-        <p className="headline max-w-[600px]">
+        <h2 className="headline max-w-[600px]">
           Our systems run every day inside real businesses: a Fortune 500 sales organisation, a made-to-order commerce
           business. Both kept working while we built.
-        </p>
+        </h2>
       </Reveal>
       <Reveal delay={0.08} className="md:justify-self-end">
         <p className="muted mb-5 max-w-[300px] text-[15px] leading-relaxed">
@@ -67,12 +68,7 @@ const Proof: React.FC = () => (
 /* ---- Page ------------------------------------------------------------------ */
 
 const Index: React.FC = () => {
-  useMeta({
-    title: 'Magpollo',
-    description:
-      'A product systems studio for owner-led firms. We diagnose one workflow, keep the tools you already use, and build the missing system around how you actually work.',
-    path: '/',
-  });
+  useMeta(PAGES.home);
 
   return (
     <Layout>

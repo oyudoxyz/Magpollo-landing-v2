@@ -3,6 +3,7 @@ import Layout from '@/components/Layout';
 import { PageHeader, Section, CtaLink, DefList, Reveal } from '@/components/editorial';
 import { SimpleForm } from '@/components/SimpleForm';
 import { useMeta } from '@/hooks/use-meta';
+import { PAGES } from '@/seo';
 
 const LANES = [
   { term: 'Engineering', description: 'TypeScript, React, Node, PostgreSQL, and the unglamorous parts that make a system run unattended.' },
@@ -12,11 +13,7 @@ const LANES = [
 ];
 
 const Careers: React.FC = () => {
-  useMeta({
-    title: 'Careers',
-    description: 'Magpollo hires by lane: engineering, product, design, marketing. Internships are being formalised.',
-    path: '/careers',
-  });
+  useMeta(PAGES.careers);
 
   return (
     <Layout>

@@ -120,35 +120,23 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ kicker, title, standfirs
   <section className="gutter">
     <div className="editorial-grid pb-12 pt-10 md:pb-16 md:pt-16">
       <div className="flex flex-col">
-        <motion.p className="eyebrow mb-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, ease }}>
-          {kicker}
-        </motion.p>
-        <motion.h1
-          className="title"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease, delay: 0.08 }}
-        >
+        <p className="eyebrow rise mb-6">{kicker}</p>
+        <h1 className="title rise" style={{ animationDelay: '80ms' }}>
           {title}
-        </motion.h1>
+        </h1>
         {standfirst && aside && <p className="subhead mt-6 max-w-[440px]">{standfirst}</p>}
         {actions && aside && <div className="mt-8">{actions}</div>}
       </div>
       {aside ? (
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease, delay: 0.2 }}>
+        <div className="rise" style={{ animationDelay: '200ms' }}>
           {aside}
-        </motion.div>
+        </div>
       ) : (
         (standfirst || actions) && (
-          <motion.div
-            className="flex flex-col lg:pt-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease, delay: 0.2 }}
-          >
+          <div className="rise flex flex-col lg:pt-12" style={{ animationDelay: '200ms' }}>
             {standfirst && <p className="subhead mb-8 max-w-[440px]">{standfirst}</p>}
             {actions}
-          </motion.div>
+          </div>
         )
       )}
     </div>

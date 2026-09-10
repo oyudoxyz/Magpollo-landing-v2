@@ -1,34 +1,37 @@
 import { useEffect } from 'react';
+import { jsonLd, PageSeo, SITE } from '@/seo';
 
-interface Meta {
-  title: string;
-  description: string;
-  /** Path for the canonical URL, e.g. "/systems". */
-  path?: string;
-}
-
-const SITE = 'https://magpollo.com';
-
-function setMeta(selector: string, attr: string, value: string) {
-  let el = document.head.querySelector<HTMLMetaElement | HTMLLinkElement>(selector);
+function upsert(selector: string, create: () => HTMLElement, attr: string, value: string) {
+  let el = document.head.querySelector<HTMLElement>(selector);
   if (!el) {
-    el = document.createElement(selector.startsWith('link') ? 'link' : 'meta');
-    const [, key, val] = selector.match(/\[(\w+(?::\w+)?)="([^"]+)"\]/) ?? [];
-    if (key && val) el.setAttribute(key, val);
+    el = create();
     document.head.appendChild(el);
   }
   el.setAttribute(attr, value);
 }
 
-/** Per-page title, description and canonical, without a head-manager dependency. */
-export function useMeta({ title, description, path = '/' }: Meta) {
+const meta = (key: 'name' | 'property', id: string, content: string) =>
+  upsert(`meta[${key}="${id}"]`, () => Object.assign(document.createElement('meta'), { [key]: id }), 'content', content);
+
+/**
+ * Keeps the document head in step with the page after client-side navigation.
+ * The prerendered HTML already carries the same tags; this only matters once
+ * the router takes over. Mirrors seo.ts renderHead.
+ */
+export function useMeta(page: PageSeo) {
   useEffect(() => {
-    const full = title === 'Magpollo' ? 'Magpollo — Product Systems Studio' : `${title} — Magpollo`;
-    document.title = full;
-    setMeta('meta[name="description"]', 'content', description);
-    setMeta('meta[property="og:title"]', 'content', full);
-    setMeta('meta[property="og:description"]', 'content', description);
-    setMeta('meta[property="og:url"]', 'content', `${SITE}${path}`);
-    setMeta('link[rel="canonical"]', 'href', `${SITE}${path}`);
-  }, [title, description, path]);
+    const url = SITE.url + page.path;
+    document.title = page.title;
+    meta('name', 'description', page.description);
+    meta('name', 'robots', page.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1');
+    upsert('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }), 'href', url);
+    meta('property', 'og:url', url);
+    meta('property', 'og:title', page.title);
+    meta('property', 'og:description', page.description);
+    meta('name', 'twitter:title', page.title);
+    meta('name', 'twitter:description', page.description);
+    const ld = document.head.querySelector<HTMLScriptElement>('script[data-seo]') ?? document.head.appendChild(Object.assign(document.createElement('script'), { type: 'application/ld+json' }));
+    ld.setAttribute('data-seo', '');
+    ld.textContent = JSON.stringify(jsonLd(page));
+  }, [page]);
 }

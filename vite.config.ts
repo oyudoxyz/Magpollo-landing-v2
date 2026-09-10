@@ -19,4 +19,16 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Framework and motion in their own long-cached chunks; page code changes without invalidating them.
+        manualChunks: (id) => {
+          if (id.includes("node_modules/framer-motion")) return "motion";
+          if (/node_modules\/(react|react-dom|react-router|react-router-dom|scheduler)\//.test(id)) return "react";
+          return undefined;
+        },
+      },
+    },
+  },
 }));
