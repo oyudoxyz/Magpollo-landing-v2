@@ -104,11 +104,8 @@ search built into Windows and ChatGPT.
 - **Test the three forms.** No SMTP credentials in this environment. Do this on
   the Preview URL before merging.
 - **Verify the domain.** Needs DNS access and a Google login.
-- **Confirm the Open Graph image.** I replaced the old one — pink is not in the
-  palette and "Build systems for your business" is not the current positioning.
-  The new one is paper, the wordmark, the hero line and the gutter ruler. Look at
-  `public/assets/og-image.jpg` and say if you
-  want it different; it is generated from `scripts/og-image.html`, so it is a
-  two-minute change.
+- **Open Graph image: decided.** Charles chose the "Build systems for your business"
+  image with the computer (2026-10-04). It is the file at
+  `public/assets/og-image.jpg`; replace the file to change it.
 - **Legal read of Privacy and Terms.** I wrote them to be accurate and plain, but
   they have not been reviewed by anyone qualified.

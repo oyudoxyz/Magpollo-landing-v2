@@ -125,8 +125,11 @@ previews and no-JS readers get real markup, and the browser hydrates it.
   prerendered files are what gets served. Unknown paths still return 200 with the noindex
   404 page; a true 404 status needs Vercel `routes` with `handle: filesystem`.
 
-Not done, needs you: verify `og-image.jpg` is current, submit the sitemap in Search
-Console, and decide whether to self-host the three Google Fonts.
+The link preview image is `public/assets/og-image.jpg` (1200×630), a designed file
+supplied by Charles on 2026-10-04. It is not generated; replace the file to change it.
+
+Not done, needs you: submit the sitemap in Search Console, and decide whether to
+self-host the three Google Fonts.
 
 ## Checking it
 
