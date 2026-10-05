@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { CtaLink } from './editorial';
 
 const Hero: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col">
           <p className="eyebrow rise mb-6">For owner-run businesses and practices</p>
 
-          <h1 className="display rise" style={{ animationDelay: '80ms' }}>
+          <h1 className="display rise rise-2">
             A system <span className="accented">should</span>
             <br />
             be handling that.
@@ -17,16 +17,14 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Standfirst */}
-        <div className="rise flex flex-col lg:pt-24" style={{ animationDelay: '200ms' }}>
+        <div className="rise rise-3 flex flex-col lg:pt-24">
           <p className="subhead mb-8 max-w-[440px]">
-            You already have the software. Operating it eats your time: the outreach, the
-            reminder, the document, the thing nobody owns. We build the missing part, around how
-            you actually work.
+            You already have software, and most of it works. What’s left is held together by
+            people: the chasing, the copying, the remembering. We build that missing part and
+            keep everything else.
           </p>
 
-          <Link to="/lets-build" className="cta">
-            Let's build
-          </Link>
+          <CtaLink to="/lets-build">Let's build</CtaLink>
         </div>
       </div>
     </section>

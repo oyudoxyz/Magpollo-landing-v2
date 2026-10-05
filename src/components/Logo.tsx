@@ -16,7 +16,7 @@ const Logo: React.FC<LogoProps> = ({
   width = 136,
   height = 34,
   color = "currentColor",
-  markColor = "#CE4257",
+  markColor = "hsl(var(--mark))",
 }) => {
   return (
     <svg

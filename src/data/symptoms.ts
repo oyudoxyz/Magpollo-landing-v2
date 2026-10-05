@@ -1,10 +1,13 @@
-/** Shared symptom list for the homepage "Sound familiar?" section and intake step 1. */
+/**
+ * Shared list for the homepage "Sound familiar?" section and the first step of the intake.
+ * Plain words an owner would say out loud. Broad on purpose: nearly every firm ticks at least one,
+ * and the last row is there for anyone who cannot name the problem yet.
+ */
 export const SYMPTOMS: string[] = [
-  'You still have to remember, chase or approve the next step',
-  'You type the same info multiple times',
-  'Important work gets missed because ownership is unclear',
-  'Finding a file, invoice or record takes too long',
-  'Customers get an inconsistent experience depending on who handles it',
-  'You open several tools just to understand what is happening',
-  'Operations fall apart when the person managing it steps away',
+  'Follow-ups slip unless someone remembers to chase',
+  'Proposals, quotes or briefs get written from scratch every time',
+  'What the firm knows lives in one person’s head or buried in old documents',
+  'The same details live in several places, and you’re never sure which is right',
+  'You get pulled in to fix what should have sorted itself out',
+  'It feels like some of this should be running itself by now',
 ];

@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
   return (
     <header className="absolute top-0 z-50 w-full">
       <div className="gutter flex h-20 items-center justify-between md:h-24">
-        <ContactReveal asButton={false} ariaLabel="Magpollo — show contact details" onOpenChange={setContactOpen}>
+        <ContactReveal asButton={false} onOpenChange={setContactOpen}>
           <Link to="/" aria-label="Magpollo home" className="flex items-center">
             <Logo width={124} height={30} />
           </Link>

@@ -1,17 +1,18 @@
 import React, { useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Layout from "@/components/Layout";
 import {
   ChoiceRows,
   SelectField,
-  MultiSelectField,
   TextField,
   TextAreaField,
   FileDrop,
 } from "@/components/intake";
-import { toast } from "sonner";
+import { CtaLink, CtaButton } from "@/components/editorial";
 import sendMail from "@/utils/sendMail";
+import { EASE } from "@/lib/motion";
+import { emailError as emailErrorFor, isEmail, showSendError } from "@/lib/forms";
 import { SYMPTOMS } from "@/data/symptoms";
 import { useMeta } from "@/hooks/use-meta";
 import { PAGES } from "@/seo";
@@ -26,17 +27,6 @@ const BUSINESS_TYPES = [
   "Something else",
 ];
 
-const TEAM_SIZES = ["Solo", "2–20", "20+"];
-
-const WORK_LIVES_IN = [
-  "Spreadsheets",
-  "An email inbox",
-  "A CRM",
-  "Paper and PDFs",
-  "Someone's memory",
-  "A tool we had built",
-];
-
 const TIMING = [
   "In the next 30 days",
   "This quarter",
@@ -44,20 +34,16 @@ const TIMING = [
   "Just exploring",
 ];
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 interface Answers {
   symptoms: string[];
   name: string;
   business: string;
   email: string;
   phone: string;
-  role: string;
   businessType: string;
-  teamSize: string;
-  workLivesIn: string[];
   timing: string;
-  notes: string;
+  story: string;
+  tools: string;
 }
 
 const EMPTY: Answers = {
@@ -66,27 +52,23 @@ const EMPTY: Answers = {
   business: "",
   email: "",
   phone: "",
-  role: "",
   businessType: "",
-  teamSize: "",
-  workLivesIn: [],
   timing: "",
-  notes: "",
+  story: "",
+  tools: "",
 };
 
 const STEPS = [
   {
-    title: "Choose what applies",
-    helper: "Pick everything that sounds familiar.",
+    title: "What sounds familiar?",
+    helper:
+      "Tick as many as you like. You don't need to know what to build. That part is our job.",
   },
   {
-    title: "A little context",
-    helper:
-      "Where to send our reply, and anything that helps us read it properly.",
+    title: "Where should we reply?",
+    helper: "A real person reads this and writes back within one business day.",
   },
 ] as const;
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 /* ---- Chrome --------------------------------------------------------------- */
 
@@ -106,7 +88,7 @@ const Progress: React.FC<{ step: number }> = ({ step }) => (
         className="h-px bg-foreground"
         initial={false}
         animate={{ width: `${((step + 1) / STEPS.length) * 100}%` }}
-        transition={{ duration: 0.4, ease }}
+        transition={{ duration: 0.4, ease: EASE }}
       />
     </div>
   </div>
@@ -124,12 +106,12 @@ const StepShell: React.FC<{
 }> = ({ step, aside, children }) => (
   <motion.div
     initial={{ opacity: 0, y: 12 }}
-    animate={{ opacity: 1, y: 0, transition: { duration: 0.25, ease } }}
-    exit={{ opacity: 0, y: -6, transition: { duration: 0.15, ease } }}
+    animate={{ opacity: 1, y: 0, transition: { duration: 0.25, ease: EASE } }}
+    exit={{ opacity: 0, y: -6, transition: { duration: 0.15, ease: EASE } }}
     className="editorial-grid"
   >
     <div className="lg:sticky lg:top-28 lg:self-start">
-      <h1 className="section-head mb-4">{STEPS[step].title}</h1>
+      <h1 className="headline mb-4">{STEPS[step].title}</h1>
       <p className="max-w-[360px] text-base text-muted-foreground">
         {STEPS[step].helper}
       </p>
@@ -145,7 +127,7 @@ const SentScreen: React.FC<{ name: string }> = ({ name }) => (
   <motion.div
     initial={{ opacity: 0, y: 16 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, ease }}
+    transition={{ duration: 0.5, ease: EASE }}
     className="editorial-grid"
   >
     <div>
@@ -160,14 +142,14 @@ const SentScreen: React.FC<{ name: string }> = ({ name }) => (
         Thanks{name ? `, ${name.split(" ")[0]}` : ""}. We read these ourselves
         rather than routing them into a queue. Expect a reply within one
         business day, usually with a question or two about the part that
-        sounded most expensive.
+        costs you the most time.
       </p>
 
       <ul className="rule-list mb-10">
         {[
-          "We read it and look for the workflow underneath the symptoms",
-          "We come back with what we would build first, and what it would cost",
-          "If it is not a fit, we will tell you that instead",
+          "We read it and look for what is really slowing the work down",
+          "We come back with the smallest thing worth building first, and what it would cost",
+          "If you do not need custom software, we will tell you that instead",
         ].map((item, i) => (
           <li key={item}>
             <span className="text-muted-foreground">{item}</span>
@@ -176,9 +158,7 @@ const SentScreen: React.FC<{ name: string }> = ({ name }) => (
         ))}
       </ul>
 
-      <Link to="/" className="cta">
-        Back to the site
-      </Link>
+      <CtaLink to="/">Back to the site</CtaLink>
     </div>
   </motion.div>
 );
@@ -201,6 +181,7 @@ const LetsBuild: React.FC = () => {
   }));
   const [files, setFiles] = useState<File[]>([]);
   const [showErrors, setShowErrors] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
@@ -209,32 +190,26 @@ const LetsBuild: React.FC = () => {
 
   // Reads from the previous state rather than the render closure, so several
   // toggles landing in the same tick do not overwrite one another.
-  const toggle = (key: "symptoms" | "workLivesIn", value: string) => {
-    setAnswers((prev) => {
-      const current = prev[key];
-      return {
-        ...prev,
-        [key]: current.includes(value)
-          ? current.filter((v) => v !== value)
-          : [...current, value],
-      };
-    });
+  const toggleSymptom = (value: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      symptoms: prev.symptoms.includes(value)
+        ? prev.symptoms.filter((v) => v !== value)
+        : [...prev.symptoms, value],
+    }));
   };
 
-  const emailError =
-    answers.email.length > 0 && !EMAIL_PATTERN.test(answers.email)
-      ? "That address does not look right"
-      : undefined;
+  const emailError = emailErrorFor(answers.email);
 
   // Only a name and a working email are required.
   const stepIsValid = useMemo(() => {
     if (step === 0) return answers.symptoms.length > 0;
-    return answers.name.trim().length > 0 && EMAIL_PATTERN.test(answers.email);
+    return answers.name.trim().length > 0 && isEmail(answers.email);
   }, [step, answers]);
 
   const missingMessage = [
-    "Pick at least one before continuing.",
-    "We need a name and a working email address.",
+    "Tick at least one so we know where to start.",
+    "We need a name and a working email address to reply.",
   ][step];
 
   const goTo = (next: number) => {
@@ -262,14 +237,12 @@ const LetsBuild: React.FC = () => {
 
     // Everything the visitor answered, in reading order, for the inbound email.
     const details = [
-      { label: "Where it breaks", value: answers.symptoms.join("\n") },
-      { label: "Role", value: answers.role },
+      { label: "What sounds familiar", value: answers.symptoms.join("\n") },
+      { label: "The last time it happened", value: answers.story },
+      { label: "Tools already in use", value: answers.tools },
       { label: "Phone", value: answers.phone },
       { label: "Kind of business", value: answers.businessType },
-      { label: "How many people", value: answers.teamSize },
-      { label: "Work lives in", value: answers.workLivesIn.join(", ") },
       { label: "Timing", value: answers.timing },
-      { label: "Anything else", value: answers.notes },
     ].filter((d) => d.value.trim().length > 0);
 
     const result = await sendMail({
@@ -292,11 +265,7 @@ const LetsBuild: React.FC = () => {
       setIsSent(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      toast.error("That did not send", {
-        description:
-          result.message ||
-          "Please try again, or write to salesteam@magpollo.com and we will pick it up there.",
-      });
+      showSendError(result.message);
     }
   };
 
@@ -309,19 +278,21 @@ const LetsBuild: React.FC = () => {
           <form onSubmit={handleSubmit} noValidate>
             <Progress step={step} />
 
-            <AnimatePresence mode="wait">
+            {/* initial={false}: the first step is already on the page when it loads. */}
+            <AnimatePresence mode="wait" initial={false}>
               {step === 0 ? (
                 <StepShell key="step-0" step={0}>
                   <ChoiceRows
-                    name="Where does it break?"
+                    name="What sounds familiar?"
                     options={SYMPTOMS}
                     selected={answers.symptoms}
-                    onToggle={(v) => toggle("symptoms", v)}
+                    onToggle={toggleSymptom}
                   />
                 </StepShell>
               ) : (
                 <StepShell key="step-1" step={1}>
-                  <div className="space-y-9">
+                  {/* Required: two fields, one row on wider screens. */}
+                  <div className="grid gap-x-8 gap-y-9 sm:grid-cols-2">
                     <TextField
                       required
                       label="Name"
@@ -329,14 +300,6 @@ const LetsBuild: React.FC = () => {
                       onChange={(v) => set("name", v)}
                       placeholder="Your name"
                       autoComplete="name"
-                      disabled={isSubmitting}
-                    />
-                    <TextField
-                      label="Business name"
-                      value={answers.business}
-                      onChange={(v) => set("business", v)}
-                      placeholder="Company or practice name"
-                      autoComplete="organization"
                       disabled={isSubmitting}
                     />
                     <TextField
@@ -350,74 +313,98 @@ const LetsBuild: React.FC = () => {
                       error={emailError}
                       disabled={isSubmitting}
                     />
-                    <TextField
-                      type="tel"
-                      label="Phone"
-                      value={answers.phone}
-                      onChange={(v) => set("phone", v)}
-                      placeholder="If you would rather talk"
-                      autoComplete="tel"
-                      disabled={isSubmitting}
-                    />
-                    <TextField
-                      label="Role"
-                      value={answers.role}
-                      onChange={(v) => set("role", v)}
-                      placeholder="Owner, partner, operations lead"
-                      autoComplete="organization-title"
-                      disabled={isSubmitting}
-                    />
                   </div>
 
-                  <div className="mt-9 space-y-9">
-                    <SelectField
-                      label="What kind of business is it?"
-                      options={BUSINESS_TYPES}
-                      value={answers.businessType}
-                      onChange={(v) => set("businessType", v)}
-                      disabled={isSubmitting}
-                    />
-                    <SelectField
-                      label="How many people?"
-                      options={TEAM_SIZES}
-                      value={answers.teamSize}
-                      onChange={(v) => set("teamSize", v)}
-                      disabled={isSubmitting}
-                    />
-                    <MultiSelectField
-                      label="Where does the work live today?"
-                      options={WORK_LIVES_IN}
-                      selected={answers.workLivesIn}
-                      onToggle={(v) => toggle("workLivesIn", v)}
-                      disabled={isSubmitting}
-                    />
-                    <SelectField
-                      label="When would you want this working?"
-                      options={TIMING}
-                      value={answers.timing}
-                      onChange={(v) => set("timing", v)}
-                      disabled={isSubmitting}
-                    />
-                    <TextAreaField
-                      label="Anything else we should read first?"
-                      value={answers.notes}
-                      onChange={(v) => set("notes", v)}
-                      placeholder="The part that costs you the most time, in your own words."
-                      rows={4}
-                      disabled={isSubmitting}
-                    />
-                    <FileDrop
-                      files={files}
-                      setFiles={setFiles}
-                      disabled={isSubmitting}
-                    />
-                  </div>
+                  {/* Optional detail: a quiet text control with the same + as the footer's
+                      contact toggle. The fields' underlines are the only lines on the page. */}
+                  <button
+                    type="button"
+                    onClick={() => setShowMore((v) => !v)}
+                    aria-expanded={showMore}
+                    aria-controls="intake-more"
+                    className={`meta-link press mt-10 inline-flex items-center gap-3 ${showMore ? "reveal-open" : ""}`}
+                  >
+                    <span className="reveal-plus" aria-hidden="true" />
+                    {showMore ? "Less detail" : "Add more detail"}
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {showMore && (
+                      <motion.div
+                        id="intake-more"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1, transition: { duration: 0.3, ease: EASE } }}
+                        exit={{ height: 0, opacity: 0, transition: { duration: 0.2, ease: EASE } }}
+                        className="overflow-hidden"
+                      >
+                        <div className="grid gap-x-8 gap-y-9 pt-10 sm:grid-cols-2">
+                          <TextField
+                            label="Business name"
+                            value={answers.business}
+                            onChange={(v) => set("business", v)}
+                            placeholder="Company or practice"
+                            autoComplete="organization"
+                            disabled={isSubmitting}
+                          />
+                          <TextField
+                            type="tel"
+                            label="Phone"
+                            value={answers.phone}
+                            onChange={(v) => set("phone", v)}
+                            placeholder="If you would rather talk"
+                            autoComplete="tel"
+                            disabled={isSubmitting}
+                          />
+                          <SelectField
+                            label="Kind of business"
+                            options={BUSINESS_TYPES}
+                            value={answers.businessType}
+                            onChange={(v) => set("businessType", v)}
+                            disabled={isSubmitting}
+                          />
+                          <SelectField
+                            label="When you want it working"
+                            options={TIMING}
+                            value={answers.timing}
+                            onChange={(v) => set("timing", v)}
+                            disabled={isSubmitting}
+                          />
+                          <div className="sm:col-span-2">
+                            <TextField
+                              label="Tools you already use"
+                              value={answers.tools}
+                              onChange={(v) => set("tools", v)}
+                              placeholder="For example Gmail, a CRM, Excel"
+                              disabled={isSubmitting}
+                            />
+                          </div>
+                          <div className="sm:col-span-2">
+                            <TextAreaField
+                              label="The last time it happened"
+                              value={answers.story}
+                              onChange={(v) => set("story", v)}
+                              placeholder="A new enquiry came in, then…"
+                              rows={3}
+                              disabled={isSubmitting}
+                            />
+                          </div>
+                          <div className="sm:col-span-2">
+                            <FileDrop
+                              files={files}
+                              setFiles={setFiles}
+                              disabled={isSubmitting}
+                            />
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </StepShell>
               )}
             </AnimatePresence>
 
-            {/* Controls */}
-            <div className="mt-16 border-t border-border pt-8">
+            {/* Controls. No rule above: the last row or field already draws one. */}
+            <div className="mt-14">
               {showErrors && !stepIsValid && (
                 <p className="mb-6 text-sm text-destructive">
                   {missingMessage}
@@ -426,36 +413,25 @@ const LetsBuild: React.FC = () => {
 
               <div className="flex items-center justify-between gap-6">
                 {step > 0 ? (
-                  <button
-                    type="button"
-                    onClick={() => goTo(step - 1)}
-                    className="cta cta-muted press"
-                    disabled={isSubmitting}
-                  >
+                  <CtaButton muted onClick={() => goTo(step - 1)} disabled={isSubmitting}>
                     Back
-                  </button>
+                  </CtaButton>
                 ) : (
-                  <Link to="/" className="cta cta-muted">
+                  <CtaLink to="/" muted>
                     Cancel
-                  </Link>
+                  </CtaLink>
                 )}
 
+                {/* Distinct keys: otherwise React reuses the node mid-click and Continue also submits.
+                    Until the step is valid the action reads as muted; pressing it says what is missing. */}
                 {step < STEPS.length - 1 ? (
-                  <button
-                    type="button"
-                    onClick={goNext}
-                    className={`cta press ${!stepIsValid ? "opacity-40" : ""}`}
-                  >
+                  <CtaButton key="continue" muted={!stepIsValid} onClick={goNext}>
                     Continue
-                  </button>
+                  </CtaButton>
                 ) : (
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`cta press ${!stepIsValid || isSubmitting ? "opacity-40" : ""}`}
-                  >
+                  <CtaButton key="send" type="submit" muted={!stepIsValid} disabled={isSubmitting}>
                     {isSubmitting ? "Sending…" : "Send it"}
-                  </button>
+                  </CtaButton>
                 )}
               </div>
             </div>

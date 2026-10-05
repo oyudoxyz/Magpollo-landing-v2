@@ -1,15 +1,16 @@
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { EASE } from '@/lib/motion';
 
 /**
- * Shared primitives for the editorial layout language: a two-column grid with a
- * headline on the left and content on the right, hairline rules between
- * sections, numbered lists, and the page header every inner page opens with.
- * Cormorant is the hero's alone; everything here sets headings in Jakarta.
+ * The site's building blocks. Pages are assembled from these rather than from
+ * one-off markup: PageHeader opens an inner page, Section lays out heading-left
+ * / content-right, NumberedRows and NumberedList are the two list styles,
+ * CtaLink and CtaButton are the one button style. Type and colour come from the
+ * classes and tokens in index.css. Cormorant is the hero's alone; everything
+ * here sets headings in Jakarta.
  */
-
-const ease = [0.22, 1, 0.36, 1] as const;
 
 interface RevealProps {
   children: ReactNode;
@@ -24,7 +25,7 @@ export const Reveal: React.FC<RevealProps> = ({ children, className, delay = 0 }
     initial={{ opacity: 0, y: 16 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: '-80px' }}
-    transition={{ duration: 0.6, ease, delay }}
+    transition={{ duration: 0.6, ease: EASE, delay }}
   >
     {children}
   </motion.div>
@@ -35,8 +36,7 @@ export const PlusMarker: React.FC<{ className?: string }> = ({ className = '' })
   <svg
     viewBox="0 0 12 12"
     aria-hidden="true"
-    className={`mb-3 h-3 w-3 stroke-border ${className}`}
-    style={{ strokeWidth: 1 }}
+    className={`mb-3 h-3 w-3 stroke-border stroke-1 ${className}`}
   >
     <line x1="6" y1="0" x2="6" y2="12" />
     <line x1="0" y1="6" x2="12" y2="6" />
@@ -51,9 +51,13 @@ interface SectionProps {
   kicker?: ReactNode;
   /** Optional short paragraph under the heading, in the left column. */
   intro?: ReactNode;
+  /** Optional actions under the intro, e.g. a CtaLink. */
+  actions?: ReactNode;
   children: ReactNode;
   /** Draw a hairline above the section. Defaults to true. */
   rule?: boolean;
+  /** Centre the two columns on each other, for a short left column beside an illustration. */
+  centered?: boolean;
   className?: string;
 }
 
@@ -63,21 +67,24 @@ export const Section: React.FC<SectionProps> = ({
   heading,
   kicker,
   intro,
+  actions,
   children,
   rule = true,
+  centered = false,
   className = '',
 }) => (
   <section id={id} className={`gutter scroll-mt-24 ${className}`}>
     {rule && <div className="hairline" />}
-    <div className="editorial-grid py-16 md:py-24">
+    <div className={`editorial-grid py-16 md:py-24 ${centered ? 'items-center' : ''}`}>
       <Reveal>
-        <div className="lg:sticky lg:top-28">
+        <div className={centered ? '' : 'lg:sticky lg:top-28'}>
           {kicker && <p className="kicker mb-5">{kicker}</p>}
           <h2 className="headline">
             <PlusMarker />
             {heading}
           </h2>
           {intro && <p className="mt-5 max-w-[380px] text-base leading-relaxed text-muted-foreground">{intro}</p>}
+          {actions && <div className="mt-8">{actions}</div>}
         </div>
       </Reveal>
       <Reveal delay={0.08}>{children}</Reveal>
@@ -102,6 +109,40 @@ export const NumberedList: React.FC<NumberedListProps> = ({ items, className = '
   </ul>
 );
 
+export interface NumberedRow {
+  title: ReactNode;
+  body: ReactNode;
+  /** Optional mono line under the body, e.g. who the client is. */
+  meta?: ReactNode;
+}
+
+interface NumberedRowsProps {
+  items: NumberedRow[];
+  /** Heading level for the row titles: h3 under a section heading, h2 directly under a page title. */
+  titleAs?: 'h2' | 'h3';
+  className?: string;
+}
+
+/**
+ * Index on the left, then a title and one supporting line. Used for the offers,
+ * the careers lanes and the case studies. Inside a .plate the rows become padded
+ * cells with faint dividers; on paper they are ruled rows.
+ */
+export const NumberedRows: React.FC<NumberedRowsProps> = ({ items, titleAs: Title = 'h3', className = '' }) => (
+  <ol className={`numbered-rows ${className}`}>
+    {items.map((item, i) => (
+      <li key={i}>
+        <span className="list-index pt-1.5">{String(i + 1).padStart(2, '0')}</span>
+        <div>
+          <Title className="item-title">{item.title}</Title>
+          <p className="copy mt-2 max-w-[460px]">{item.body}</p>
+          {item.meta && <p className="kicker mt-4">{item.meta}</p>}
+        </div>
+      </li>
+    ))}
+  </ol>
+);
+
 interface PageHeaderProps {
   kicker: ReactNode;
   title: ReactNode;
@@ -121,19 +162,19 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ kicker, title, standfirs
     <div className="editorial-grid pb-12 pt-10 md:pb-16 md:pt-16">
       <div className="flex flex-col">
         <p className="eyebrow rise mb-6">{kicker}</p>
-        <h1 className="title rise" style={{ animationDelay: '80ms' }}>
+        <h1 className="headline rise rise-2">
           {title}
         </h1>
         {standfirst && aside && <p className="subhead mt-6 max-w-[440px]">{standfirst}</p>}
         {actions && aside && <div className="mt-8">{actions}</div>}
       </div>
       {aside ? (
-        <div className="rise" style={{ animationDelay: '200ms' }}>
+        <div className="rise rise-3">
           {aside}
         </div>
       ) : (
         (standfirst || actions) && (
-          <div className="rise flex flex-col lg:pt-12" style={{ animationDelay: '200ms' }}>
+          <div className="rise rise-3 flex flex-col lg:pt-12">
             {standfirst && <p className="subhead mb-8 max-w-[440px]">{standfirst}</p>}
             {actions}
           </div>
@@ -151,28 +192,21 @@ interface CtaLinkProps {
   className?: string;
 }
 
-/** The marketing CTA: underlined uppercase type. Never a filled box on the site. */
+/** The site's button, as a link. Underlined uppercase type; never a filled box. */
 export const CtaLink: React.FC<CtaLinkProps> = ({ to, children, muted = false, state, className = '' }) => (
   <Link to={to} state={state} className={`cta ${muted ? 'cta-muted' : ''} ${className}`}>
     {children}
   </Link>
 );
 
-interface DefListProps {
-  items: Array<{ term: ReactNode; description: ReactNode }>;
-  className?: string;
+interface CtaButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Secondary actions (Back, Cancel), and a primary that is not ready to be pressed yet. */
+  muted?: boolean;
 }
 
-/** Term on the left in mono, description on the right, hairlines between. */
-export const DefList: React.FC<DefListProps> = ({ items, className = '' }) => (
-  <dl className={`def-list ${className}`}>
-    {items.map((item, i) => (
-      <div key={i}>
-        <dt>{item.term}</dt>
-        <dd>{item.description}</dd>
-      </div>
-    ))}
-  </dl>
+/** The same button, as a <button>: form steps and submits. */
+export const CtaButton: React.FC<CtaButtonProps> = ({ muted = false, type = 'button', className = '', ...rest }) => (
+  <button type={type} className={`cta press ${muted ? 'cta-muted' : ''} ${className}`} {...rest} />
 );
 
 interface ProseProps {
@@ -182,7 +216,7 @@ interface ProseProps {
 
 /** Long-form copy at a 66ch measure: privacy, terms. */
 export const Prose: React.FC<ProseProps> = ({ children, className = '' }) => (
-  <div className={`max-w-[66ch] text-[15px] leading-[1.6] text-foreground [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:font-sans [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2:first-child]:mt-0 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:mb-1.5 [&_a]:underline [&_a]:underline-offset-4 ${className}`}>
+  <div className={`prose ${className}`}>
     {children}
   </div>
 );

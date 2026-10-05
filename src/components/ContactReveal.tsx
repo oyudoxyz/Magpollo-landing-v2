@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { CONTACT } from '@/data/site';
 
 /* ---- Icons ---------------------------------------------------------------- */
 
@@ -43,26 +44,35 @@ const InstagramIcon = () => (
   </svg>
 );
 
+/** Email, phone, then the social links, all from the one CONTACT record. */
+const SOCIAL_ICONS: Record<string, React.FC> = {
+  X: TwitterIcon,
+  LinkedIn: LinkedinIcon,
+  Discord: DiscordIcon,
+  Instagram: InstagramIcon,
+};
+
 const links = [
-  { label: 'salesteam@magpollo.com', href: 'mailto:salesteam@magpollo.com', Icon: MailIcon },
-  { label: '+1 (470) 287-7285', href: 'tel:+14702877285', Icon: PhoneIcon },
-  { label: 'X', href: 'https://x.com/MagpolloTech', Icon: TwitterIcon },
-  { label: 'LinkedIn', href: 'http://linkedin.com/company/magpollo', Icon: LinkedinIcon },
-  { label: 'Discord', href: 'https://discord.gg/4Qv8khbBf8', Icon: DiscordIcon },
-  { label: 'Instagram', href: 'https://www.instagram.com/magpollotech', Icon: InstagramIcon },
+  { label: CONTACT.email, href: `mailto:${CONTACT.email}`, Icon: MailIcon },
+  { label: CONTACT.phone, href: CONTACT.phoneHref, Icon: PhoneIcon },
+  ...CONTACT.social.map((s) => ({ ...s, Icon: SOCIAL_ICONS[s.label] })),
 ];
 
 const CLOSE_DELAY_MS = 500;
 
 interface ContactRevealProps {
   children: React.ReactNode;
-  ariaLabel: string;
+  /** Label for the button trigger. Not needed when the trigger is not a button. */
+  ariaLabel?: string;
   /** Breathing + that rotates to × when open. Footer only. */
   showPlus?: boolean;
   /** Footer uses a button; the navbar keeps the logo as a home link. */
   asButton?: boolean;
   triggerClassName?: string;
   onOpenChange?: (open: boolean) => void;
+  /** Hold the strip open from outside, e.g. the footer's Contact link. */
+  pinned?: boolean;
+  onPinnedChange?: (pinned: boolean) => void;
 }
 
 /**
@@ -76,9 +86,19 @@ export const ContactReveal: React.FC<ContactRevealProps> = ({
   asButton = true,
   triggerClassName = '',
   onOpenChange,
+  pinned: pinnedProp,
+  onPinnedChange,
 }) => {
   const [hovered, setHovered] = useState(false);
-  const [pinned, setPinned] = useState(false);
+  const [pinnedState, setPinnedState] = useState(false);
+  const pinned = pinnedProp ?? pinnedState;
+  const setPinned = useCallback(
+    (next: boolean) => {
+      if (pinnedProp === undefined) setPinnedState(next);
+      onPinnedChange?.(next);
+    },
+    [pinnedProp, onPinnedChange],
+  );
   const closeTimer = useRef<ReturnType<typeof setTimeout>>();
   const open = hovered || pinned;
 
@@ -114,7 +134,7 @@ export const ContactReveal: React.FC<ContactRevealProps> = ({
     const onKeyDown = (e: KeyboardEvent) => e.key === 'Escape' && setPinned(false);
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-  }, [pinned]);
+  }, [pinned, setPinned]);
 
   const hoverHandlers = {
     onMouseEnter: show,
@@ -138,14 +158,14 @@ export const ContactReveal: React.FC<ContactRevealProps> = ({
           type="button"
           aria-expanded={open}
           aria-label={ariaLabel}
-          onClick={() => setPinned((p) => !p)}
+          onClick={() => setPinned(!pinned)}
           className={triggerClasses}
         >
           {children}
           {showPlus && <span className="reveal-plus" aria-hidden="true" />}
         </button>
       ) : (
-        <div aria-expanded={open} className={triggerClasses}>
+        <div className={triggerClasses}>
           {children}
         </div>
       )}

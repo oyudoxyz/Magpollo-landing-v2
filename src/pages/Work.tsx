@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import RetroPrinter from '@/components/illustrations/RetroPrinter';
-import { PageHeader, CtaLink, Reveal } from '@/components/editorial';
+import { PageHeader, CtaLink, Reveal, NumberedRows } from '@/components/editorial';
 import { SimpleForm } from '@/components/SimpleForm';
 import { useMeta } from '@/hooks/use-meta';
 import { PAGES } from '@/seo';
@@ -30,18 +30,12 @@ const Work: React.FC = () => {
       <section className="gutter pb-16 md:pb-24">
         <Reveal>
           <div className="plate grid md:grid-cols-2">
-            <ul className="border-b border-border md:border-b-0 md:border-r">
-              {PROOF.map((p, i) => (
-                <li key={p.id} className={`grid gap-3 p-7 sm:grid-cols-[40px_1fr] md:p-10 ${i < PROOF.length - 1 ? 'border-b border-border' : ''}`}>
-                  <span className="list-index pt-1.5">{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h2 className="text-lg font-semibold tracking-tight">{p.title}</h2>
-                    <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{p.summary}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="p-7 md:p-10">
+            <NumberedRows
+              titleAs="h2"
+              className="plate-rule border-b md:border-b-0 md:border-r"
+              items={PROOF.map((p) => ({ title: p.title, body: p.summary, meta: `${p.client} · name withheld` }))}
+            />
+            <div className="plate-cell">
               <p className="kicker mb-8">Request a walkthrough</p>
               <SimpleForm
                 purpose="Case study walkthrough"

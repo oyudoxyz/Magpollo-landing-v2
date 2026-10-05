@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { toast } from 'sonner';
 import { TextField, TextAreaField, SelectField } from '@/components/intake';
+import { CtaButton } from '@/components/editorial';
 import sendMail, { IntakeDetail } from '@/utils/sendMail';
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { emailError, isEmail, showSendError } from '@/lib/forms';
 
 export interface SimpleFormField {
   key: string;
@@ -44,9 +43,7 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({ purpose, fields, submitL
   const set = (key: string, value: string) => setValues((prev) => ({ ...prev, [key]: value }));
 
   const email = values.email ?? '';
-  const emailError = email.length > 0 && !EMAIL_PATTERN.test(email) ? 'That address does not look right' : undefined;
-  const valid =
-    fields.every((f) => !f.required || values[f.key].trim().length > 0) && (!('email' in values) || EMAIL_PATTERN.test(email));
+  const valid = fields.every((f) => !f.required || values[f.key].trim().length > 0) && (!('email' in values) || isEmail(email));
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,9 +71,7 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({ purpose, fields, submitL
       setDone(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      toast.error('That did not send', {
-        description: result.message || 'Please try again, or write to salesteam@magpollo.com and we will pick it up there.',
-      });
+      showSendError(result.message);
     }
   };
 
@@ -121,19 +116,19 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({ purpose, fields, submitL
             placeholder={f.placeholder}
             required={f.required}
             autoComplete={f.autoComplete}
-            error={f.key === 'email' ? emailError : undefined}
+            error={f.key === 'email' ? emailError(email) : undefined}
             disabled={busy}
           />
         );
       })}
 
-      <div className="border-t border-border pt-8">
+      <div className="border-t plate-rule pt-8">
         {showErrors && !valid && (
           <p className="mb-6 text-sm text-destructive">We need a name and a working email address.</p>
         )}
-        <button type="submit" disabled={busy} className={`cta press ${!valid || busy ? 'opacity-40' : ''}`}>
+        <CtaButton type="submit" muted={!valid} disabled={busy}>
           {busy ? 'Sending…' : submitLabel}
-        </button>
+        </CtaButton>
       </div>
     </form>
   );

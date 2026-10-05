@@ -20,26 +20,30 @@ export const CONTACT = {
 /** Header links, in order. Let's build leads. */
 export const NAV = [
   { to: '/lets-build', label: "Let's build", primary: true },
-  { to: '/work', label: 'Proof of work' },
 ];
 
 /** The three things we sell, in the order a client meets them. No prices or timelines on the site. */
 export const OFFERS = [
-  { index: '01', name: 'Blueprint', summary: 'We map the workflow as it actually runs and give you a fixed scope. Sometimes the recommendation is not to build.' },
-  { index: '02', name: 'Sprint', summary: 'We build the agreed system around your real workflow. One decision from you a week, a written definition of done.' },
-  { index: '03', name: 'Care', summary: 'We keep it running: monitoring, fixes, updates, and a monthly look at whether it is still doing its job.' },
+  { title: 'Blueprint', body: 'We learn how the work really happens today and give you a fixed scope. Sometimes the honest answer is that you don’t need to build anything.' },
+  { title: 'Sprint', body: 'We build the missing part around the tools you already use. You make one decision a week, and we agree in writing what “done” means.' },
+  { title: 'Care', body: 'We keep it running: fixes, updates, and a monthly check that it’s still doing its job. Your team stays in charge wherever judgment matters.' },
 ];
 
-/** The two systems we can walk a client through, on request. */
+/**
+ * The two systems we can walk a client through, on request. `client` describes
+ * the client without naming them; the name itself is never on the site.
+ */
 export const PROOF = [
   {
     id: 'prospecting-engine',
     title: 'Prospecting engine for field sales',
-    summary: 'Sourcing, drafting, a human approval gate on every send, follow-up and reply triage. In daily use inside a Fortune 500 sales organisation.',
+    summary: 'Sourcing, drafting, a human approval gate on every send, follow-up and reply triage.',
+    client: 'Fortune 500 sales organisation',
   },
   {
     id: 'custom-commerce',
     title: 'Custom commerce system',
-    summary: 'A 3D configurator that turns a customer’s choices into validated pricing, a checkout-ready order and a fulfilment record. Client identity withheld.',
+    summary: 'A 3D configurator that turns a customer’s choices into validated pricing, a checkout-ready order and a fulfilment record.',
+    client: 'Made-to-order commerce business',
   },
 ];

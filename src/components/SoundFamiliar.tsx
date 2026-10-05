@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Section } from './editorial';
+import { Section, CtaLink } from './editorial';
 import { ChoiceRows } from './intake';
 import { SYMPTOMS } from '@/data/symptoms';
 
@@ -23,12 +22,12 @@ const SoundFamiliar: React.FC = () => {
       />
 
       <p className="mb-6 mt-10 max-w-[380px] text-base text-muted-foreground">
-        Pick what applies. It carries over into the first step of the intake, so you only say it once.
+        Tick any that sound like your week. They carry over to the next step, so you only say it once.
       </p>
 
-      <Link to="/lets-build" state={{ symptoms: selected }} className="cta">
-        Start here
-      </Link>
+      <CtaLink to="/lets-build" state={{ symptoms: selected }}>
+        Tell us more
+      </CtaLink>
     </Section>
   );
 };

@@ -6,8 +6,9 @@ import './styles/illustrations.css'
 
 const root = document.getElementById("root")!;
 
-// Prerendered pages arrive with markup in #root: hydrate. Anything else mounts fresh.
-if (root.hasChildNodes()) {
+// Prerendered pages arrive with markup in #root: hydrate. Anything else mounts
+// fresh — including the dev server, where #root holds only the template comment.
+if (root.firstElementChild) {
   hydrateRoot(root, <App />);
 } else {
   createRoot(root).render(<App />);

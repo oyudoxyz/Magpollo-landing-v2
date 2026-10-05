@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Layout from '@/components/Layout';
+import { CtaLink } from '@/components/editorial';
 import { useMeta } from '@/hooks/use-meta';
 import { PAGES } from '@/seo';
 
@@ -31,12 +32,10 @@ const NotFound: React.FC = () => {
               worth reading is one click away.
             </p>
             <div className="flex flex-col items-start gap-5">
-              <Link to="/" className="cta">
-                Back to the site
-              </Link>
-              <Link to="/lets-build" className="cta cta-muted">
+              <CtaLink to="/">Back to the site</CtaLink>
+              <CtaLink to="/lets-build" muted>
                 Tell us what it is
-              </Link>
+              </CtaLink>
             </div>
           </div>
         </div>

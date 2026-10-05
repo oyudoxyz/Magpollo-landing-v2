@@ -5,16 +5,18 @@
  * so SPA navigation keeps the head correct after hydration.
  */
 
+import { CONTACT } from './data/site';
+
 export const SITE = {
   url: 'https://magpollo.com',
   name: 'Magpollo',
-  legalName: 'Magpollo Corp',
+  legalName: CONTACT.legalName,
   tagline: 'Product Systems for Practice & Business',
   description:
     'Magpollo is a product systems studio for owner-led firms. We diagnose one workflow, keep the tools you already use, and build the missing system around how you actually work.',
   ogImage: 'https://magpollo.com/assets/og-image.jpg',
   logo: 'https://magpollo.com/assets/magpollo-logo.png',
-  email: 'salesteam@magpollo.com',
+  email: CONTACT.email,
   phone: '+1-470-287-7285',
   sameAs: ['https://x.com/MagpolloTech', 'https://linkedin.com/company/magpollo', 'https://www.instagram.com/magpollotech'],
   locale: 'en_US',

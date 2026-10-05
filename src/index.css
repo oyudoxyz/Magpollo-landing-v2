@@ -3,18 +3,41 @@
 @tailwind utilities;
 
 @layer base {
+  /* ---- Tokens ------------------------------------------------------------
+     Every colour, font and timing on the site is defined here, once.
+     Colours are HSL triples so any of them can take an alpha:
+     hsl(var(--rule) / 0.5). Tailwind's colour and font names in
+     tailwind.config.ts point back at these. */
   :root {
-    /* Core editorial palette, tuned in OKLCH against the logo red (H15.9).
-       Paper carries a trace of the mark's warmth without reading brown;
-       ink is a warm near-black rather than neutral, so type sits on the
-       page like print instead of pixels. */
-    --bg: 35 21% 84%;        /* #DFD8CE  paper   OKLCH H78 C.015 L.885 */
-    --fg: 34 23% 12%;        /* #251F17  ink     11.54:1 on paper */
-    --muted-ink: 37 9% 36%;  /* #635D53  muted    4.61:1 — clears AA for body text */
-    --rule: 34 8% 65%;       /* #ACA69E  hairline 1.71:1 */
-    --mark: 351 59% 53%;     /* #CE4257 — reserved for the logo mark */
-    --surface: 30 33% 97%;   /* #FAF8F5  document paper: cards, callouts */
-    --work: 0 0% 100%;       /* #FFFFFF  where the work happens: tables, forms */
+    /* Editorial palette, tuned in OKLCH against the logo red (H15.9). Paper
+       carries a trace of the mark's warmth without reading brown; ink is a
+       warm near-black, so type sits on the page like print. */
+    --bg: 35 21% 84%;            /* #DFD8CE  paper: the page */
+    --surface: 30 33% 97%;       /* #FAF8F5  document paper: menus, toasts, printouts */
+    --work: 0 0% 100%;           /* #FFFFFF  white plates: where the work happens */
+    --tint: 35 16% 78%;          /* #D0C8BE  hover fill on paper surfaces */
+    --fg: 34 23% 12%;            /* #251F17  ink, 11.54:1 on paper */
+    --muted-ink: 37 9% 36%;      /* #635D53  secondary text, 4.61:1 on paper (AA) */
+    --rule: 34 8% 65%;           /* #ACA69E  hairlines */
+    --screen: 36 23.8% 8.24%;    /* #1A1610  the computer's screen black */
+    --mark: 351 59% 53%;         /* #CE4257  the logo red: CTA underline, status dots, fills */
+    --mark-ink: 351 60% 38%;     /* #9B2738  the red as text: error messages, 5.4:1 on paper (AA) */
+
+    /* Hardware: the putty plastic the illustrations are built from. */
+    --hw-body: 37.5 27.6% 88.6%; /* #EAE4DA */
+    --hw-bezel: 37.5 16% 80.4%;  /* #D5CFC5 */
+    --hw-key: 37.5 21.6% 85.5%;  /* #E2DCD2 */
+    --hw-highlight: 36.9 30.2% 91.6%;/* #F0EBE3  top-edge highlight */
+    --hw-shade: 37 12% 74%;      /* #C5BFB5  bottom-edge shade */
+    --hw-screen-text: 40 14% 75%;/* #C8C2B6  phosphor text */
+    --hw-paper-edge: 36.9 20% 87.3%;/* #E5E0D8  edge of the printout */
+
+    /* Type. Jakarta for prose and UI, Cormorant for the hero alone, JetBrains
+       Mono for kickers and figures, Courier on the computer's screen. */
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    --font-terminal: 'Courier New', Courier, monospace;
 
     /* Motion. One house easing for reveals; three Emil Kowalski curves for UI:
        ease-out for anything entering or exiting, ease-in-out for things that
@@ -28,42 +51,10 @@
     --dur-ui: 250ms;
     --dur-reveal: 600ms;
 
-    /* shadcn tokens mapped onto the palette above */
-    --background: var(--bg);
-    --foreground: var(--fg);
-
-    --card: var(--surface);
-    --card-foreground: var(--fg);
-
-    --popover: var(--surface);
-    --popover-foreground: var(--fg);
-
-    /* Primary is inverted: ink surface, paper text */
-    --primary: var(--fg);
-    --primary-foreground: var(--bg);
-
-    --secondary: 35 16% 78%;
-    --secondary-foreground: var(--fg);
-
-    --muted: 35 16% 78%;
-    --muted-foreground: var(--muted-ink);
-
-    --accent: 35 16% 78%;
-    --accent-foreground: var(--fg);
-
-    --destructive: 351 59% 53%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: var(--rule);
-    --input: var(--rule);
-    --ring: var(--fg);
-
-    /* Editorial layouts are square. No rounded corners anywhere. */
-    --radius: 0rem;
+    /* Layout. The page measure, shared by the gutter and the margin ruler. */
+    --measure: min(1100px, 100% - max(12vw, 3rem));
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -80,7 +71,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background font-sans text-foreground antialiased;
     font-size: 15px;
     line-height: 1.5;
   }
@@ -108,15 +99,8 @@
 }
 
 @layer components {
-  /* ---- Editorial type scale ------------------------------------------- */
-
-  /* Small tracked-out label that sits above a headline */
-  .eyebrow {
-    @apply text-muted-foreground uppercase;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    line-height: 1.4;
-  }
+  /* ---- Type scale -------------------------------------------------------
+     Six text styles. Use these names; do not restate sizes in markup. */
 
   /* Hero headline. The one place the display serif is used. */
   .display {
@@ -127,49 +111,13 @@
     letter-spacing: -0.04em;
   }
 
-  /* Section headline */
-  .section-head {
-    @apply font-serif;
-    font-size: clamp(2rem, 4.4vw, 3rem);
-    line-height: 1.05;
+  /* The one italic word in a display headline. */
+  .accented {
+    font-style: italic;
     font-weight: 300;
-    letter-spacing: -0.02em;
   }
 
-  /* Above-the-fold entrance. CSS, not JS: it runs before hydration, off the
-     main thread, and the static HTML rests visible for anything without JS. */
-  .rise {
-    animation: rise 0.8s var(--ease) both;
-  }
-
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .rise {
-      animation: fade-in 0.3s ease both;
-      transform: none;
-    }
-  }
-
-  /* Page title on inner pages. Jakarta, not Cormorant: the serif is the hero's alone. */
-  .title {
-    font-size: clamp(2rem, 4.2vw, 3rem);
-    line-height: 1.05;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  /* Section headline. */
+  /* Page titles and section headings. */
   .headline {
     font-size: clamp(1.5rem, 2.6vw, 1.875rem);
     line-height: 1.15;
@@ -178,88 +126,222 @@
     text-wrap: balance;
   }
 
-  /* White plate: where the work happens. Product-like content sits on it. */
-  .plate {
-    background: hsl(var(--work));
-    border: 1px solid hsl(var(--rule));
+  /* The name of one item in a list: an offer, a lane, a case study. */
+  .item-title {
+    font-size: 18px;
+    line-height: 1.55;
+    font-weight: 600;
+    letter-spacing: -0.025em;
   }
 
-  /* Ink band: one per page, for the line that should land hardest. */
-  .band-ink {
-    background: hsl(var(--fg));
-    /* Document paper, not page paper: warm paper on warm ink reads muddy. */
-    color: hsl(var(--surface));
-  }
-
-  .band-ink .cta {
-    color: hsl(var(--surface));
-    border-bottom-color: hsl(var(--surface));
-  }
-
-  /* The one accent on the page: the kicker in the mark red. */
-  .band-ink .kicker {
-    color: hsl(var(--mark));
-  }
-
-  .band-ink .muted {
-    color: hsl(var(--rule));
-  }
-
-  /* Standfirst / lede paragraph beside a headline */
+  /* Standfirst beside a headline. */
   .subhead {
     font-size: clamp(1rem, 1.6vw, 1.125rem);
     line-height: 1.6;
-    font-weight: 400;
   }
 
-  /* The one italic word in a headline. */
-  .accented {
-    font-style: italic;
-    font-weight: 300;
+  /* Supporting paragraph: descriptions, helper text. */
+  .copy {
+    @apply text-muted-foreground;
+    font-size: 15px;
+    line-height: 1.625;
   }
 
-  /* ---- Rules and structure -------------------------------------------- */
+  /* Small tracked-out label above a headline or a field. */
+  .eyebrow {
+    @apply uppercase text-muted-foreground;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+  }
+
+  /* Mono label for indices, dates, figures and tags. */
+  .kicker {
+    @apply font-mono uppercase text-muted-foreground;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    line-height: 1.4;
+  }
+
+  /* The 01 / 02 / 03 beside a row. */
+  .list-index {
+    @apply shrink-0 font-mono tabular-nums text-muted-foreground;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ---- Entrance ---------------------------------------------------------
+     Above-the-fold entrance. CSS, not JS: it runs before hydration, off the
+     main thread, and the static HTML rests visible for anything without JS.
+     .rise-2 and .rise-3 follow the first element in. */
+  .rise {
+    animation: rise 0.8s var(--ease) both;
+  }
+
+  .rise-2 {
+    animation-delay: 80ms;
+  }
+
+  .rise-3 {
+    animation-delay: 200ms;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rise {
+      animation-name: rise-fade;
+      animation-duration: 0.3s;
+    }
+
+    @keyframes rise-fade {
+      from {
+        opacity: 0;
+      }
+    }
+  }
+
+  /* ---- Structure -------------------------------------------------------- */
 
   .hairline {
     @apply w-full bg-border;
     height: 1px;
   }
 
-  /* Two-column editorial grid: heading left, content right */
+  /* Two columns: heading left, content right. */
   .editorial-grid {
     @apply grid grid-cols-1 gap-x-10 gap-y-8 lg:grid-cols-2;
   }
 
-  /* ---- Links and actions ---------------------------------------------- */
+  /* White panel on paper. No outer border: the white edge is enough. Dividers
+     inside it use .plate-rule, a faint line rather than the page hairline. */
+  .plate {
+    background: hsl(var(--work));
+  }
 
+  .plate-rule {
+    border-color: hsl(var(--muted-ink) / 0.1);
+  }
+
+  /* Padding for one cell of a plate. */
+  .plate-cell {
+    @apply p-7 md:p-10;
+  }
+
+  /* ---- Lists ------------------------------------------------------------ */
+
+  /* Numbered rows: index, title, one line. Lines sit between rows only. */
+  .numbered-rows > li {
+    @apply grid gap-3 border-b border-border py-6 sm:grid-cols-[40px_1fr];
+  }
+
+  .numbered-rows > li:first-child {
+    padding-top: 0;
+  }
+
+  .numbered-rows > li:last-child {
+    border-bottom-width: 0;
+    padding-bottom: 0;
+  }
+
+  /* On a plate the rows are cells: full padding, faint dividers. */
+  .plate .numbered-rows > li,
+  .plate .numbered-rows > li:first-child,
+  .plate .numbered-rows > li:last-child {
+    @apply plate-cell plate-rule;
+  }
+
+  /* Plain ruled rows with the index on the right. */
+  .rule-list > li {
+    @apply flex items-baseline justify-between gap-6 border-b border-border py-4;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  /* Long-form copy at a reading measure: privacy, terms. */
+  .prose {
+    max-width: 66ch;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .prose h2 {
+    @apply mb-4 mt-12 text-xl font-semibold tracking-tight;
+  }
+
+  .prose h2:first-child {
+    margin-top: 0;
+  }
+
+  .prose p,
+  .prose ul {
+    margin-bottom: 1rem;
+  }
+
+  .prose ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+
+  .prose li {
+    margin-bottom: 0.375rem;
+  }
+
+  .prose a {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ---- Links and actions ------------------------------------------------ */
+
+  /* The site's one button style. An underline, not a border: when a label
+     wraps, each line is underlined to exactly the length of its text, and
+     balance keeps the two lines even. */
   .cta {
-    @apply inline-flex w-fit items-center uppercase text-foreground transition-opacity duration-200;
+    @apply inline-block uppercase text-foreground transition-opacity duration-200;
     font-size: 13px;
+    font-weight: 700;
+    font-style: italic;
     letter-spacing: 0.1em;
-    padding-bottom: 4px;
-    border-bottom: 1px solid hsl(var(--fg));
+    line-height: 2;
+    text-wrap: balance;
+    text-decoration-line: underline;
+    text-decoration-color: hsl(var(--mark));
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
+    text-decoration-skip-ink: none;
+  }
+
+  .cta:disabled {
+    opacity: 0.4;
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .cta:hover {
+    .cta:hover:not(:disabled) {
       opacity: 0.6;
     }
   }
 
+  /* Secondary action (Back, Cancel) and a primary that is not ready yet. */
   .cta-muted {
     @apply text-muted-foreground;
-    border-bottom-color: hsl(var(--muted-ink));
+    text-decoration-color: hsl(var(--muted-ink));
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .cta-muted:hover {
+    .cta-muted:hover:not(:disabled) {
       @apply text-foreground;
-      border-bottom-color: hsl(var(--fg));
+      text-decoration-color: hsl(var(--fg));
       opacity: 1;
     }
   }
 
-  /* Tracked-out uppercase nav / meta link */
+  /* Tracked-out uppercase link: header, footer, small toggles. */
   .meta-link {
     @apply uppercase text-muted-foreground transition-colors duration-200;
     font-size: 11px;
@@ -272,100 +354,10 @@
     }
   }
 
-  /* Current page in the nav: ink, not muted. */
-  .meta-link[aria-current='page'] {
+  /* Current page, or a toggle that is open: ink, not muted. */
+  .meta-link[aria-current='page'],
+  .meta-link[aria-expanded='true'] {
     @apply text-foreground;
-  }
-
-  /* Mono kicker for indices, dates, figures, tags — uppercase and tracked. */
-  .kicker {
-    @apply font-mono uppercase text-muted-foreground;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    line-height: 1.4;
-  }
-
-  /* The one filled control: closing CTA in a form, primary action in a panel. */
-  .btn-ink {
-    @apply inline-flex h-11 items-center justify-center bg-foreground px-5 text-background;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: background-color var(--dur-fast) ease, transform var(--dur-press) var(--ease-out);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .btn-ink:hover {
-      background-color: #3a3226;
-    }
-  }
-
-  .btn-ink:disabled {
-    background-color: hsl(var(--rule));
-    color: hsl(var(--bg));
-    cursor: not-allowed;
-  }
-
-  /* Outlined counterpart. */
-  .btn-line {
-    @apply inline-flex h-11 items-center justify-center border border-border bg-transparent px-5 text-foreground;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: border-color var(--dur-fast) ease, transform var(--dur-press) var(--ease-out);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .btn-line:hover {
-      border-color: hsl(var(--fg));
-    }
-  }
-
-  /* Card on paper: document surface, hairline, square. No shadow. */
-  .paper-card {
-    @apply border border-border bg-card;
-  }
-
-  /* ---- Numbered list used by "Sound familiar?" and friends ------------- */
-
-  .rule-list > li {
-    @apply flex items-baseline justify-between gap-6 border-b border-border py-4;
-    font-size: 16px;
-    line-height: 1.45;
-  }
-
-  .rule-list > li:first-child {
-    @apply border-t;
-  }
-
-  .list-index {
-    @apply shrink-0 font-mono text-muted-foreground tabular-nums;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-  }
-
-  /* Definition rows: term on the left in mono, description on the right. */
-  .def-list > div {
-    @apply grid gap-2 border-b border-border py-5 sm:grid-cols-[160px_1fr] sm:gap-8;
-  }
-
-  .def-list > div:first-child {
-    @apply border-t;
-  }
-
-  .def-list dt {
-    @apply font-mono uppercase text-muted-foreground;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    line-height: 1.8;
-  }
-
-  .def-list dd {
-    @apply text-foreground;
-    font-size: 15px;
-    line-height: 1.55;
   }
 }
 
@@ -374,7 +366,7 @@
      Floors the gutter at 1.5rem so it stays readable on small phones. */
   .gutter {
     @apply mx-auto;
-    width: min(1100px, 100% - max(12vw, 3rem));
+    width: var(--measure);
   }
 
   /* ---- Margin ruler ---------------------------------------------------
@@ -409,7 +401,7 @@
   .guides-ruler {
     position: absolute;
     top: 0;
-    left: calc(50% - min(1100px, 100% - max(12vw, 3rem)) / 2 - 40px);
+    left: calc(50% - var(--measure) / 2 - 40px);
     width: 5px;
     height: 300vh;
     will-change: transform;
@@ -448,7 +440,7 @@
     height: 9px;
     animation: reveal-breathe 2.8s ease-in-out infinite;
     transition:
-      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.35s var(--ease),
       opacity 0.25s ease;
   }
 
@@ -487,287 +479,6 @@
       opacity: 0.7;
     }
   }
-
-  /* ---- Retro computer illustration ---------------------------------- */
-  .retro-computer {
-    --rc-body: #EAE4DA;
-    --rc-bezel: #D5CFC5;
-    --rc-screen: #1A1610;
-    --rc-screen-text: #C8C2B6;
-    --rc-key: #E2DCD2;
-    --rc-key-shadow: #C5BFB5;
-    width: 100%;
-    max-width: 420px;
-    font-family: 'Courier New', 'Courier', monospace;
-  }
-
-  .rc-body {
-    background: var(--rc-body);
-    border-radius: 16px 16px 4px 4px;
-    padding: 20px 20px 12px;
-    box-shadow:
-      0 1px 0 0 #f0ebe3 inset,
-      0 -1px 0 0 #c5bfb5 inset,
-      0 8px 30px -8px hsl(var(--fg) / 0.12);
-  }
-
-  .rc-bezel {
-    background: var(--rc-bezel);
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 1px 3px hsl(var(--fg) / 0.1) inset;
-  }
-
-  .rc-screen {
-    position: relative;
-    background: var(--rc-screen);
-    border-radius: 4px;
-    overflow: hidden;
-    aspect-ratio: 4 / 2.6;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .rc-titlebar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 8px;
-    border-bottom: 1px solid hsl(var(--muted-ink) / 0.25);
-    font-size: 9px;
-    color: var(--rc-screen-text);
-    letter-spacing: 0.05em;
-  }
-
-  .rc-titlebar-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: hsl(var(--mark));
-  }
-
-  .rc-titlebar-text {
-    opacity: 0.7;
-  }
-
-  .rc-desktop {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-  }
-
-  .rc-sidebar {
-    width: 72px;
-    padding: 8px 6px;
-    border-right: 1px solid hsl(var(--muted-ink) / 0.2);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .rc-sidebar-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 8px;
-    color: var(--rc-screen-text);
-    opacity: 0.8;
-    padding: 2px 3px;
-    border-radius: 2px;
-    letter-spacing: 0.02em;
-  }
-
-  .rc-sidebar-item:first-child {
-    opacity: 1;
-    background: hsl(var(--muted-ink) / 0.15);
-  }
-
-  .rc-main {
-    flex: 1;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .rc-window {
-    width: 100%;
-    flex: 1;
-    border: 1px solid hsl(var(--muted-ink) / 0.3);
-    border-radius: 2px;
-    background: hsl(var(--fg) / 0.3);
-    display: flex;
-    flex-direction: column;
-  }
-
-  .rc-window-titlebar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3px 6px;
-    border-bottom: 1px dotted hsl(var(--muted-ink) / 0.3);
-    font-size: 8px;
-    color: var(--rc-screen-text);
-    letter-spacing: 0.03em;
-  }
-
-  .rc-window-close {
-    opacity: 0.5;
-    font-size: 7px;
-  }
-
-  .rc-window-body {
-    padding: 6px 8px;
-    font-size: 8.5px;
-    line-height: 1.55;
-    color: var(--rc-screen-text);
-    flex: 1;
-    letter-spacing: 0.01em;
-  }
-
-  .rc-screen::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0 2px,
-      hsl(var(--fg) / 0.04) 2px 3px
-    );
-    pointer-events: none;
-    border-radius: 4px;
-  }
-
-  .rc-cursor {
-    font-weight: 700;
-    margin-left: 1px;
-    color: hsl(var(--mark));
-  }
-
-  .rc-statusbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3px 8px;
-    border-top: 1px solid hsl(var(--muted-ink) / 0.2);
-    font-size: 7px;
-    color: var(--rc-screen-text);
-    opacity: 0.5;
-    letter-spacing: 0.04em;
-  }
-
-  .rc-badge-area {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-    padding-left: 4px;
-  }
-
-  .rc-badge {
-    background: hsl(var(--mark));
-    color: hsl(var(--bg));
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    font-size: 6px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 2px 5px;
-    line-height: 1.4;
-  }
-
-  .rc-logo-mark {
-    width: 8px;
-    height: 8px;
-    background: hsl(var(--mark));
-  }
-
-  .rc-chin {
-    background: var(--rc-body);
-    border-radius: 0 0 4px 4px;
-    padding: 8px 0 6px;
-    display: flex;
-    justify-content: center;
-    box-shadow:
-      0 -1px 0 0 #d5cfc5,
-      0 4px 12px -4px hsl(var(--fg) / 0.08);
-  }
-
-  .rc-slot {
-    width: 55%;
-    height: 4px;
-    background: #c5bfb5;
-    border-radius: 1px;
-    box-shadow: 0 1px 0 #f0ebe3;
-  }
-
-  .rc-keyboard {
-    margin-top: 6px;
-    padding: 10px 6px 8px;
-    background: var(--rc-body);
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    box-shadow:
-      0 1px 0 0 #f0ebe3 inset,
-      0 4px 16px -4px hsl(var(--fg) / 0.08);
-  }
-
-  .rc-key-row {
-    display: flex;
-    justify-content: center;
-    gap: 3px;
-  }
-
-  .rc-key {
-    background: var(--rc-key);
-    border-radius: 2px;
-    box-shadow: 0 1px 0 var(--rc-key-shadow);
-  }
-
-  .rc-key-sm {
-    width: 24px;
-    height: 14px;
-  }
-
-  .rc-key-space {
-    width: 120px;
-    height: 14px;
-  }
-
-  @media (max-width: 480px) {
-    .retro-computer {
-      max-width: 320px;
-    }
-
-    .rc-sidebar {
-      width: 56px;
-    }
-
-    .rc-sidebar-item {
-      font-size: 7px;
-    }
-
-    .rc-window-body {
-      font-size: 7.5px;
-    }
-
-    .rc-key-sm {
-      width: 18px;
-      height: 12px;
-    }
-
-    .rc-key-space {
-      width: 90px;
-      height: 12px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .rc-cursor {
-      opacity: 1;
-    }
-  }
 }
 
 /* ---- Print Stylesheet for PDF & Hardcopy Export ------------------------ */
@@ -788,8 +499,7 @@
   header.absolute,
   footer.site-footer,
   .page-ruler,
-  .guides-ruler,
-  .print\:hidden {
+  .guides-ruler {
     display: none !important;
   }
 
@@ -804,20 +514,13 @@
     padding: 0 !important;
   }
 
-  article {
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    background: transparent !important;
-  }
-
   h1, h2, h3, h4 {
     break-after: avoid !important;
     page-break-after: avoid !important;
     color: #000000 !important;
   }
 
-  figure, table, tr, .break-inside-avoid, section {
+  section {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }

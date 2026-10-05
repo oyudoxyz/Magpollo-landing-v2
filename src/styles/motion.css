@@ -106,7 +106,7 @@
   justify-content: space-between;
   padding: 18px 0;
   border-bottom: 1px solid hsl(var(--rule));
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 32px;
   font-weight: 300;
   letter-spacing: -0.02em;
@@ -166,11 +166,11 @@
   --success-bg: hsl(var(--surface));
   --success-border: hsl(var(--fg));
   --success-text: hsl(var(--fg));
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 
 [data-sonner-toast] {
-  box-shadow: 0 4px 20px rgba(37, 31, 23, 0.08);
+  box-shadow: 0 4px 20px hsl(var(--fg) / 0.08);
 }
 
 [data-sonner-toast] [data-title] {

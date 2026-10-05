@@ -1,24 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-
-const ease = [0.22, 1, 0.36, 1] as const;
+import { EASE } from '@/lib/motion';
 
 const memoText =
   'Good morning. Your follow-ups are sent, invoices are filed, and your calendar is set. Ready when you are.';
 
 const sidebarItems = [
-  { color: 'hsl(var(--mark))', label: 'System' },
-  { color: 'hsl(var(--mark) / 0.6)', label: 'Clients' },
-  { color: 'hsl(var(--muted-ink))', label: 'Invoices' },
-  { color: 'hsl(var(--muted-ink))', label: 'Outreach' },
-  { color: 'hsl(var(--muted-ink))', label: 'Reports' },
+  { status: 'is-live', label: 'System' },
+  { status: 'is-recent', label: 'Clients' },
+  { status: '', label: 'Invoices' },
+  { status: '', label: 'Outreach' },
+  { status: '', label: 'Reports' },
 ];
+
+/** Keys per row, top to bottom; the last row is two keys either side of the space bar. */
+const KEY_ROWS = [13, 12, 11];
 
 const RetroComputer: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const [typed, setTyped] = useState('');
-  const [cursorVisible, setCursorVisible] = useState(true);
 
   useEffect(() => {
     if (!inView || typed.length >= memoText.length) return;
@@ -29,19 +30,15 @@ const RetroComputer: React.FC = () => {
     return () => clearTimeout(id);
   }, [inView, typed]);
 
-  useEffect(() => {
-    const id = setInterval(() => setCursorVisible((v) => !v), 530);
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <motion.div
       ref={ref}
-      className="retro-computer"
+      className="illo retro-computer"
+      aria-hidden="true"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 1, ease }}
+      transition={{ duration: 1, ease: EASE }}
     >
       {/* --- Monitor body --- */}
       <div className="rc-body">
@@ -57,9 +54,9 @@ const RetroComputer: React.FC = () => {
             <div className="rc-desktop">
               {/* Sidebar */}
               <div className="rc-sidebar">
-                {sidebarItems.map(({ color, label }) => (
+                {sidebarItems.map(({ status, label }) => (
                   <div key={label} className="rc-sidebar-item">
-                    <span style={{ color, fontSize: '6px' }}>●</span>
+                    <span className={`rc-dot ${status}`}>●</span>
                     <span>{label}</span>
                   </div>
                 ))}
@@ -74,12 +71,7 @@ const RetroComputer: React.FC = () => {
                   </div>
                   <div className="rc-window-body">
                     {typed}
-                    <span
-                      className="rc-cursor"
-                      style={{ opacity: cursorVisible ? 1 : 0 }}
-                    >
-                      ▌
-                    </span>
+                    <span className="rc-cursor">▌</span>
                   </div>
                 </div>
               </div>
@@ -107,21 +99,13 @@ const RetroComputer: React.FC = () => {
 
       {/* Keyboard */}
       <div className="rc-keyboard">
-        <div className="rc-key-row">
-          {Array.from({ length: 13 }).map((_, i) => (
-            <div key={i} className="rc-key rc-key-sm" />
-          ))}
-        </div>
-        <div className="rc-key-row">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="rc-key rc-key-sm" />
-          ))}
-        </div>
-        <div className="rc-key-row">
-          {Array.from({ length: 11 }).map((_, i) => (
-            <div key={i} className="rc-key rc-key-sm" />
-          ))}
-        </div>
+        {KEY_ROWS.map((count) => (
+          <div key={count} className="rc-key-row">
+            {Array.from({ length: count }, (_, i) => (
+              <div key={i} className="rc-key rc-key-sm" />
+            ))}
+          </div>
+        ))}
         <div className="rc-key-row">
           <div className="rc-key rc-key-sm" />
           <div className="rc-key rc-key-sm" />

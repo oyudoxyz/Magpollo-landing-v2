@@ -34,7 +34,7 @@ const FieldLabel: React.FC<{
   return (
     <Tag htmlFor={htmlFor} className="eyebrow mb-1 block">
       {children}
-      {!required && <span className="ml-2 normal-case tracking-normal opacity-60">optional</span>}
+      {!required && <span className="ml-2 normal-case tracking-normal">optional</span>}
     </Tag>
   );
 };
@@ -61,7 +61,7 @@ export const ChoiceRows: React.FC<ChoiceRowsProps> = ({ options, selected, onTog
           aria-checked={isSelected}
           aria-label={option}
           onClick={() => onToggle(option)}
-          className={`press-row flex w-full items-center justify-between gap-6 border-b border-border py-4 text-left text-base leading-snug first:border-t ${
+          className={`press-row flex w-full items-center justify-between gap-6 border-b border-border py-4 text-left text-base leading-snug ${
             isSelected ? 'text-foreground' : 'text-muted-foreground [@media(hover:hover)]:hover:text-foreground'
           }`}
         >
@@ -156,19 +156,18 @@ export const TextAreaField: React.FC<Omit<FieldProps, 'type'> & { rows?: number 
 
 /* ---- Dropdowns ------------------------------------------------------------ */
 
-interface DropdownProps {
+interface SelectFieldProps {
   label: string;
   options: string[];
-  /** Always an array. Single-choice dropdowns hold at most one value. */
-  selected: string[];
-  onSelect: (value: string) => void;
-  multiple?: boolean;
+  value: string;
+  /** Picking the current value again clears it, so a choice is never a trap. */
+  onChange: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
 }
 
 /**
- * One dropdown for every question on the page. Native selects hand the option
+ * Single choice. One dropdown for every question on the site. Native selects hand the option
  * list to the OS, which drops a stock iOS/Android picker into the middle of an
  * otherwise typeset page — so the list is drawn here instead, in the same
  * hairline-and-square language as the rest of the form.
@@ -176,13 +175,12 @@ interface DropdownProps {
  * Keyboard: arrows and Home/End move, Enter or Space picks, Escape closes and
  * returns focus to the trigger.
  */
-const Dropdown: React.FC<DropdownProps> = ({
+export const SelectField: React.FC<SelectFieldProps> = ({
   label,
   options,
-  selected,
-  onSelect,
-  multiple = false,
-  placeholder,
+  value,
+  onChange,
+  placeholder = 'Choose one',
   disabled,
 }) => {
   const [open, setOpen] = useState(false);
@@ -209,8 +207,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   const openAt = () => {
-    const firstSelected = options.findIndex((o) => selected.includes(o));
-    setActiveIndex(firstSelected >= 0 ? firstSelected : 0);
+    setActiveIndex(Math.max(options.indexOf(value), 0));
     setOpen(true);
   };
 
@@ -230,8 +227,8 @@ const Dropdown: React.FC<DropdownProps> = ({
   }, [open, activeIndex]);
 
   const pick = (option: string) => {
-    onSelect(option);
-    if (!multiple) close();
+    onChange(option === value ? '' : option);
+    close();
   };
 
   const onPanelKeyDown = (e: React.KeyboardEvent) => {
@@ -271,15 +268,6 @@ const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
-  const fallback = placeholder ?? (multiple ? 'Choose any' : 'Choose one');
-  const summary = multiple
-    ? selected.length === 0
-      ? fallback
-      : selected.length <= 2
-        ? selected.join(', ')
-        : `${selected.length} selected`
-    : selected[0] || fallback;
-
   return (
     <div ref={wrapper}>
       <FieldLabel as="span">{label}</FieldLabel>
@@ -293,24 +281,23 @@ const Dropdown: React.FC<DropdownProps> = ({
           aria-expanded={open}
           aria-haspopup="listbox"
           className={`${underline} flex cursor-pointer items-center pr-8 text-left ${
-            selected.length ? 'text-foreground' : 'text-muted-foreground/60'
+            value ? 'text-foreground' : 'text-muted-foreground'
           }`}
         >
-          <span className="truncate">{summary}</span>
+          <span className="truncate">{value || placeholder}</span>
         </button>
         <Chevron open={open} />
 
         {open && (
           <div
             role="listbox"
-            aria-multiselectable={multiple || undefined}
             aria-label={label}
             onKeyDown={onPanelKeyDown}
             data-mounted={mounted}
             className="dropdown-panel absolute left-0 right-0 top-full z-20 max-h-64 overflow-y-auto border border-border bg-card"
           >
             {options.map((option, i) => {
-              const isSelected = selected.includes(option);
+              const isSelected = option === value;
               return (
                 <button
                   key={option}
@@ -341,64 +328,6 @@ const Dropdown: React.FC<DropdownProps> = ({
     </div>
   );
 };
-
-interface SelectFieldProps {
-  label: string;
-  options: string[];
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-}
-
-/** Single choice. Picking a value closes the list. */
-export const SelectField: React.FC<SelectFieldProps> = ({
-  label,
-  options,
-  value,
-  onChange,
-  placeholder,
-  disabled,
-}) => (
-  <Dropdown
-    label={label}
-    options={options}
-    selected={value ? [value] : []}
-    // Picking the current value again clears it, so a choice is never a trap.
-    onSelect={(option) => onChange(option === value ? '' : option)}
-    placeholder={placeholder}
-    disabled={disabled}
-  />
-);
-
-interface MultiSelectFieldProps {
-  label: string;
-  options: string[];
-  selected: string[];
-  onToggle: (value: string) => void;
-  placeholder?: string;
-  disabled?: boolean;
-}
-
-/** Several answers behind one line. The list stays open while picking. */
-export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
-  label,
-  options,
-  selected,
-  onToggle,
-  placeholder,
-  disabled,
-}) => (
-  <Dropdown
-    multiple
-    label={label}
-    options={options}
-    selected={selected}
-    onSelect={onToggle}
-    placeholder={placeholder}
-    disabled={disabled}
-  />
-);
 
 /* ---- Attachments ---------------------------------------------------------- */
 
@@ -461,7 +390,7 @@ export const FileDrop: React.FC<FileDropProps> = ({ files, setFiles, disabled })
             browse
           </button>
         </p>
-        <p className="mt-2 text-xs text-muted-foreground/70">
+        <p className="mt-2 text-xs text-muted-foreground">
           Up to {MAX_FILES} files, 10MB each.
         </p>
         <input
@@ -484,7 +413,7 @@ export const FileDrop: React.FC<FileDropProps> = ({ files, setFiles, disabled })
           {files.map((file, index) => (
             <li
               key={`${file.name}-${index}`}
-              className="flex items-center justify-between gap-4 border-b border-border py-3 first:border-t"
+              className="flex items-center justify-between gap-4 border-b border-border py-3"
             >
               <span className="truncate text-sm text-muted-foreground">{file.name}</span>
               <button

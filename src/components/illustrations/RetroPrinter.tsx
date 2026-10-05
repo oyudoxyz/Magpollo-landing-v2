@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { EASE } from '@/lib/motion';
 
-const ease = [0.22, 1, 0.36, 1] as const;
 
 // Record IDs only. No client names, invented or otherwise, on an illustration.
 const LOG = [
@@ -29,7 +29,7 @@ const RetroPrinter: React.FC = () => {
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.8, ease }}
+      transition={{ duration: 0.8, ease: EASE }}
     >
       <div className="rp-paper">
         <div className="rp-paper-title">Approval log · today</div>
@@ -51,7 +51,7 @@ const RetroPrinter: React.FC = () => {
           <div className="rp-buttons">
             <div className="rp-button" />
             <div className="rp-button" />
-            <span className="rp-led" style={{ marginLeft: 6, alignSelf: 'center' }} />
+            <span className="rp-led" />
           </div>
         </div>
       </div>

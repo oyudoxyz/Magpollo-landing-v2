@@ -23,26 +23,29 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     window.scrollTo({ top: 0 });
   }, [pathname, hash]);
 
+  // The margin ruler trails the scroll with a soft delay. The loop runs only
+  // while it is catching up, so an idle page does no work.
   useEffect(() => {
     let current = window.scrollY;
-    let target = window.scrollY;
-    let rafId: number;
-
-    const onScroll = () => {
-      target = window.scrollY;
-    };
+    let rafId = 0;
 
     const tick = () => {
-      // Lerp — ruler follows scroll with a soft delay
+      const target = window.scrollY;
       current += (target - current) * 0.07;
+      const settled = Math.abs(target - current) < 0.5;
+      if (settled) current = target;
       if (rulerRef.current) {
         rulerRef.current.style.transform = `translateY(${-current}px)`;
       }
-      rafId = requestAnimationFrame(tick);
+      rafId = settled ? 0 : requestAnimationFrame(tick);
+    };
+
+    const onScroll = () => {
+      if (!rafId) rafId = requestAnimationFrame(tick);
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    rafId = requestAnimationFrame(tick);
+    onScroll();
 
     return () => {
       window.removeEventListener('scroll', onScroll);

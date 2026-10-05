@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import RetroComputer from '@/components/RetroComputer';
+import RetroPrinter from '@/components/illustrations/RetroPrinter';
 import SoundFamiliar from '@/components/SoundFamiliar';
-import { Reveal, CtaLink } from '@/components/editorial';
+import { Reveal, CtaLink, Section, NumberedRows } from '@/components/editorial';
 import { useMeta } from '@/hooks/use-meta';
 import { PAGES } from '@/seo';
 import { OFFERS } from '@/data/site';
@@ -14,55 +14,41 @@ import { OFFERS } from '@/data/site';
 const Offers: React.FC = () => (
   <section id="systems" className="gutter scroll-mt-24 py-16 md:py-24">
     <Reveal>
-      <div className="plate grid gap-0 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-        <div className="border-b border-border p-7 md:border-b-0 md:border-r md:p-10">
+      <div className="plate grid md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <div className="plate-cell plate-rule border-b md:border-b-0 md:border-r">
           <p className="kicker mb-5">What we build</p>
-          <h2 className="headline">Three steps. One workflow.</h2>
-          <p className="mt-5 max-w-[320px] text-[15px] leading-relaxed text-muted-foreground">
-            Not a platform. The missing part between the tools you already have, built around how you work.
+          <h2 className="headline">Keep what works. Build what’s missing.</h2>
+          <p className="copy mt-5 max-w-[320px]">
+            We won’t ask you to switch tools. We look at how the work happens today, then build only the part that’s missing.
           </p>
           <div className="mt-8">
-            <CtaLink to="/lets-build">Start with the Blueprint</CtaLink>
+            <CtaLink to="/lets-build">Show us how it{' '}works today</CtaLink>
           </div>
         </div>
-        <ol className="stagger">
-          {OFFERS.map((o, i) => (
-            <li key={o.name} className={`grid gap-3 p-7 sm:grid-cols-[40px_1fr] md:p-10 ${i < OFFERS.length - 1 ? 'border-b border-border' : ''}`}>
-              <span className="list-index pt-1.5">{o.index}</span>
-              <div>
-                <h3 className="text-lg font-semibold tracking-tight">{o.name}</h3>
-                <p className="mt-2 max-w-[460px] text-[15px] leading-relaxed text-muted-foreground">{o.summary}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <NumberedRows className="stagger" items={OFFERS} />
       </div>
     </Reveal>
   </section>
 );
 
-/* ---- Proof: the one ink band ---------------------------------------------- */
+/* ---- Proof: a pointer to the Work page, carried by the printer --------------- */
 
+/**
+ * The case studies themselves live on /work and grow there. The homepage only
+ * says they exist and how to see them, with the printer standing in for them.
+ */
 const Proof: React.FC = () => (
-  <section id="proof" className="band-ink">
-    <div className="gutter grid gap-8 py-14 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] md:items-end md:py-20">
-      <Reveal>
-        <p className="kicker mb-5">Proof of work</p>
-        <h2 className="headline max-w-[600px]">
-          Our systems run every day inside real businesses: a Fortune 500 sales organisation, a made-to-order commerce
-          business. Both kept working while we built.
-        </h2>
-      </Reveal>
-      <Reveal delay={0.08} className="md:justify-self-end">
-        <p className="muted mb-5 max-w-[300px] text-[15px] leading-relaxed">
-          Case studies are shown to prospective clients, not published.
-        </p>
-        <Link to="/work" className="cta">
-          Request a walkthrough
-        </Link>
-      </Reveal>
+  <Section
+    id="proof"
+    centered
+    heading="Already running in real businesses."
+    intro="Our systems run every day inside the firms we build for. Each case study walks through what people did by hand, what the system took over and what changed. We show them on a call rather than publishing them."
+    actions={<CtaLink to="/work">Request a walkthrough</CtaLink>}
+  >
+    <div className="flex justify-center lg:justify-end">
+      <RetroPrinter />
     </div>
-  </section>
+  </Section>
 );
 
 /* ---- Page ------------------------------------------------------------------ */
