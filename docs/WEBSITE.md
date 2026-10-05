@@ -46,7 +46,7 @@ titles and section headings), `.item-title`, `.subhead`, `.copy`, plus the label
 | `Section` | Hairline, heading left, content right. `actions` for a button under the intro, `centered` beside an illustration |
 | `NumberedRows` | Index, title, one line, optional mono meta line. Offers, lanes, case studies. Becomes padded cells inside a `.plate` |
 | `NumberedList` | Plain ruled rows with the index on the right |
-| `CtaLink`, `CtaButton` | The one button style (`.cta`): bold italic, red underline. `muted` for Back/Cancel and for a primary that is not ready |
+| `CtaLink`, `CtaButton` | The one button style (`.cta`): bold, red underline. `muted` for Back/Cancel; `waiting` for a primary that is not ready (grey label, red underline kept) |
 | `Reveal` | Fade-up once, in view |
 | `Prose` | Long-form copy (`.prose`) |
 

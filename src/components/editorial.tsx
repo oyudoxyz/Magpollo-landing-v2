@@ -200,13 +200,15 @@ export const CtaLink: React.FC<CtaLinkProps> = ({ to, children, muted = false, s
 );
 
 interface CtaButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Secondary actions (Back, Cancel), and a primary that is not ready to be pressed yet. */
+  /** Secondary actions: Back, Cancel. Grey label and underline. */
   muted?: boolean;
+  /** A primary action that is not ready yet. Grey label, red underline kept. */
+  waiting?: boolean;
 }
 
 /** The same button, as a <button>: form steps and submits. */
-export const CtaButton: React.FC<CtaButtonProps> = ({ muted = false, type = 'button', className = '', ...rest }) => (
-  <button type={type} className={`cta press ${muted ? 'cta-muted' : ''} ${className}`} {...rest} />
+export const CtaButton: React.FC<CtaButtonProps> = ({ muted = false, waiting = false, type = 'button', className = '', ...rest }) => (
+  <button type={type} className={`cta press ${muted ? 'cta-muted' : ''} ${waiting ? 'cta-waiting' : ''} ${className}`} {...rest} />
 );
 
 interface ProseProps {

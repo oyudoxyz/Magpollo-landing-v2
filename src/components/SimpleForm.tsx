@@ -126,7 +126,7 @@ export const SimpleForm: React.FC<SimpleFormProps> = ({ purpose, fields, submitL
         {showErrors && !valid && (
           <p className="mb-6 text-sm text-destructive">We need a name and a working email address.</p>
         )}
-        <CtaButton type="submit" muted={!valid} disabled={busy}>
+        <CtaButton type="submit" waiting={!valid} disabled={busy}>
           {busy ? 'Sending…' : submitLabel}
         </CtaButton>
       </div>

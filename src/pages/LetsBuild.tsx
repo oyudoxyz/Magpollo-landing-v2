@@ -423,13 +423,13 @@ const LetsBuild: React.FC = () => {
                 )}
 
                 {/* Distinct keys: otherwise React reuses the node mid-click and Continue also submits.
-                    Until the step is valid the action reads as muted; pressing it says what is missing. */}
+                    Until the step is valid the label is muted; pressing it says what is missing. */}
                 {step < STEPS.length - 1 ? (
-                  <CtaButton key="continue" muted={!stepIsValid} onClick={goNext}>
+                  <CtaButton key="continue" waiting={!stepIsValid} onClick={goNext}>
                     Continue
                   </CtaButton>
                 ) : (
-                  <CtaButton key="send" type="submit" muted={!stepIsValid} disabled={isSubmitting}>
+                  <CtaButton key="send" type="submit" waiting={!stepIsValid} disabled={isSubmitting}>
                     {isSubmitting ? "Sending…" : "Send it"}
                   </CtaButton>
                 )}

@@ -303,10 +303,9 @@
      wraps, each line is underlined to exactly the length of its text, and
      balance keeps the two lines even. */
   .cta {
-    @apply inline-block uppercase text-foreground transition-opacity duration-200;
+    @apply inline-block w-fit uppercase text-foreground transition-opacity duration-200;
     font-size: 13px;
     font-weight: 700;
-    font-style: italic;
     letter-spacing: 0.1em;
     line-height: 2;
     text-wrap: balance;
@@ -327,7 +326,13 @@
     }
   }
 
-  /* Secondary action (Back, Cancel) and a primary that is not ready yet. */
+  /* A primary action that is not ready yet: muted label, but it keeps the red
+     underline so it still reads as the main action. */
+  .cta-waiting {
+    @apply text-muted-foreground;
+  }
+
+  /* Secondary action (Back, Cancel). */
   .cta-muted {
     @apply text-muted-foreground;
     text-decoration-color: hsl(var(--muted-ink));
