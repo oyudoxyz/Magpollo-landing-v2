@@ -22,6 +22,13 @@ export const NAV = [
   { to: '/lets-build', label: "Let's build", primary: true },
 ];
 
+/** The phone menu has room for more than the header: every page worth visiting. */
+export const MOBILE_NAV = [
+  ...NAV,
+  { to: '/work', label: 'Proof of work' },
+  { to: '/careers', label: 'Careers' },
+];
+
 /** The three things we sell, in the order a client meets them. No prices or timelines on the site. */
 export const OFFERS = [
   { title: 'Blueprint', body: 'We learn how the work really happens today and give you a fixed scope. Sometimes the honest answer is that you don’t need to build anything.' },

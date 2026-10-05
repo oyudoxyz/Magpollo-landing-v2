@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import { ContactReveal } from './ContactReveal';
-import { CONTACT, NAV } from '@/data/site';
+import { NAV, MOBILE_NAV } from '@/data/site';
 
 /**
  * Absolute header over the page: logo (with contact details behind it) on the
@@ -82,27 +82,12 @@ const Navbar: React.FC = () => {
       >
         <div className="nav-sheet-handle" aria-hidden="true" />
         <nav aria-label="Primary" className="gutter pb-8 pt-6">
-          {[...NAV, { to: '/careers', label: 'Careers' }].map((item, i) => (
+          {MOBILE_NAV.map((item, i) => (
             <NavLink key={item.to} to={item.to} className="nav-sheet-link press-row" tabIndex={sheetOpen ? 0 : -1}>
               <span>{item.label}</span>
               <span className="kicker">{String(i + 1).padStart(2, '0')}</span>
             </NavLink>
           ))}
-          <div className="mt-6 flex flex-col gap-3 text-sm text-muted-foreground">
-            <a href={`mailto:${CONTACT.email}`} className="w-fit" tabIndex={sheetOpen ? 0 : -1}>
-              {CONTACT.email}
-            </a>
-            <a href={CONTACT.phoneHref} className="w-fit" tabIndex={sheetOpen ? 0 : -1}>
-              {CONTACT.phone}
-            </a>
-            <div className="mt-2 flex gap-5">
-              {CONTACT.social.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="meta-link" tabIndex={sheetOpen ? 0 : -1}>
-                  {s.label}
-                </a>
-              ))}
-            </div>
-          </div>
         </nav>
       </div>
     </header>

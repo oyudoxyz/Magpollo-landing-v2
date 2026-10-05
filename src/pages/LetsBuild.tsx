@@ -238,7 +238,7 @@ const LetsBuild: React.FC = () => {
     // Everything the visitor answered, in reading order, for the inbound email.
     const details = [
       { label: "What sounds familiar", value: answers.symptoms.join("\n") },
-      { label: "The last time it happened", value: answers.story },
+      { label: "Description", value: answers.story },
       { label: "Tools already in use", value: answers.tools },
       { label: "Phone", value: answers.phone },
       { label: "Kind of business", value: answers.businessType },
@@ -338,6 +338,16 @@ const LetsBuild: React.FC = () => {
                         className="overflow-hidden"
                       >
                         <div className="grid gap-x-8 gap-y-9 pt-10 sm:grid-cols-2">
+                          <div className="sm:col-span-2">
+                            <TextAreaField
+                              label="Description"
+                              value={answers.story}
+                              onChange={(v) => set("story", v)}
+                              placeholder="A few lines in your own words…"
+                              rows={3}
+                              disabled={isSubmitting}
+                            />
+                          </div>
                           <TextField
                             label="Business name"
                             value={answers.business}
@@ -375,16 +385,6 @@ const LetsBuild: React.FC = () => {
                               value={answers.tools}
                               onChange={(v) => set("tools", v)}
                               placeholder="For example Gmail, a CRM, Excel"
-                              disabled={isSubmitting}
-                            />
-                          </div>
-                          <div className="sm:col-span-2">
-                            <TextAreaField
-                              label="The last time it happened"
-                              value={answers.story}
-                              onChange={(v) => set("story", v)}
-                              placeholder="A new enquiry came in, then…"
-                              rows={3}
                               disabled={isSubmitting}
                             />
                           </div>

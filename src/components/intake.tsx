@@ -34,7 +34,7 @@ const FieldLabel: React.FC<{
   return (
     <Tag htmlFor={htmlFor} className="eyebrow mb-1 block">
       {children}
-      {!required && <span className="ml-2 normal-case tracking-normal">optional</span>}
+      {!required && <span className="ml-2 normal-case tracking-normal text-foreground/20">optional</span>}
     </Tag>
   );
 };
