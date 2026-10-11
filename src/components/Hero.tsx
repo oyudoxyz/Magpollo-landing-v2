@@ -1,5 +1,6 @@
 import React from 'react';
 import { CtaLink } from './editorial';
+import { SITE } from '@/seo';
 
 const Hero: React.FC = () => {
   return (
@@ -7,7 +8,7 @@ const Hero: React.FC = () => {
       <div className="editorial-grid pb-24 pt-16 md:pb-32 md:pt-24">
         {/* Headline */}
         <div className="flex flex-col">
-          <p className="eyebrow rise mb-6">For owner-run businesses and practices</p>
+          <p className="eyebrow rise mb-6">{SITE.audience}</p>
 
           <h1 className="display rise rise-2">
             A system <span className="accented">should</span>

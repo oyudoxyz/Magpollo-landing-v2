@@ -59,10 +59,21 @@ const Index: React.FC = () => {
   return (
     <Layout>
       <Hero />
+      {/* The computer, then the definition of what it shows. Same type as the hero:
+          eyebrow for the question, subhead for the answer. */}
       <section className="gutter pb-20 md:pb-28">
         <div className="editorial-grid">
           <div className="hidden lg:block" />
-          <RetroComputer />
+          <div>
+            <RetroComputer />
+            <Reveal className="mt-12 md:mt-16">
+              <h2 className="eyebrow mb-6">What is a Product System?</h2>
+              <p className="subhead max-w-[440px]">
+                A Product System is purpose-built software around an important business workflow, connecting the tools,
+                data, people and decisions needed to run it.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
       <SoundFamiliar />

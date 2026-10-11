@@ -10,4 +10,5 @@ export const SYMPTOMS: string[] = [
   'The same details live in several places, and you’re never sure which is right',
   'You get pulled in to fix what should have sorted itself out',
   'It feels like some of this should be running itself by now',
+  'You already know what you want built',
 ];

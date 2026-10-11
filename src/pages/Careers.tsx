@@ -9,7 +9,7 @@ const LANES = [
   { title: 'Engineering', body: 'TypeScript, React, Node, PostgreSQL, and the unglamorous parts that make a system run unattended.' },
   { title: 'Product', body: 'Discovery, the written recommendation, holding scope, one client decision a week.' },
   { title: 'Design', body: 'Interfaces that read like print, and the discipline to leave things out.' },
-  { title: 'Marketing', body: 'Turning client work into writing that owner-led firms recognise themselves in.' },
+  { title: 'Marketing', body: 'Turning client work into writing that owner-led firms and practices recognise themselves in.' },
 ];
 
 const Careers: React.FC = () => {
