@@ -16,7 +16,7 @@ export const SITE = {
   /** The short form, where space is tight: footer, image alt text. */
   tagline: 'Product Systems for firms and practices',
   description:
-    'Magpollo is a product systems studio for owner-led firms and practices. We diagnose one workflow, keep the tools you already use, and build the missing system around how you actually work.',
+    'Magpollo is a product systems studio for owner-led firms and practices. We diagnose one workflow, keep the tools that work, and build the missing system around how you actually work.',
   ogImage: 'https://magpollo.com/assets/og-image.jpg',
   logo: 'https://magpollo.com/assets/magpollo-logo.png',
   email: CONTACT.email,
@@ -44,7 +44,7 @@ export const PAGES: Record<string, PageSeo> = {
     path: '/',
     title: 'Magpollo — Product Systems Studio',
     description:
-      'A product systems studio for owner-led firms and practices. We diagnose one workflow, keep the tools you use, and build the missing system around it.',
+      'A product systems studio for owner-led firms and practices. We diagnose one workflow, keep the tools that work, and build the missing system around it.',
   },
   letsBuild: {
     path: '/lets-build',

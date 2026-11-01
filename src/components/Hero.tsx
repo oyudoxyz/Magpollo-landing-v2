@@ -21,8 +21,8 @@ const Hero: React.FC = () => {
         <div className="rise rise-3 flex flex-col lg:pt-24">
           <p className="subhead mb-8 max-w-[440px]">
             You already have software, and most of it works. What’s left is held together by
-            people: the chasing, the copying, the remembering. We build that missing part and
-            keep everything else.
+            people: the chasing, the copying, the remembering. We keep what works, retire what
+            doesn’t, and build the missing part: a Product System.
           </p>
 
           <CtaLink to="/lets-build">Let's build</CtaLink>

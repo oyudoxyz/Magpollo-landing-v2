@@ -19,7 +19,7 @@ const Offers: React.FC = () => (
           <p className="kicker mb-5">What we build</p>
           <h2 className="headline">Keep what works. Build what’s missing.</h2>
           <p className="copy mt-5 max-w-[320px]">
-            We won’t ask you to switch tools. We look at how the work happens today, then build only the part that’s missing.
+            We don’t swap tools for the sake of it. We look at how the work happens today, keep what earns its place, and build only the part that’s missing.
           </p>
           <div className="mt-8">
             <CtaLink to="/lets-build">Show us how it{' '}works today</CtaLink>

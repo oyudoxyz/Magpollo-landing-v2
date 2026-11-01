@@ -32,7 +32,7 @@ export const MOBILE_NAV = [
 /** The three things we sell, in the order a client meets them. No prices or timelines on the site. */
 export const OFFERS = [
   { title: 'Blueprint', body: 'We learn how the work really happens today and give you a fixed scope. Sometimes the honest answer is that you don’t need to build anything.' },
-  { title: 'Sprint', body: 'We build the missing part around the tools you already use. You make one decision a week, and we agree in writing what “done” means.' },
+  { title: 'Sprint', body: 'We build the missing part around the tools worth keeping. You make one decision a week, and we agree in writing what “done” means.' },
   { title: 'Care', body: 'We keep it running: fixes, updates, and a monthly check that it’s still doing its job. Your team stays in charge wherever judgment matters.' },
 ];
 
