@@ -47,17 +47,18 @@ const Terms: React.FC = () => {
           <h2>How engagements are contracted</h2>
           <ul>
             <li>
-              <strong>Blueprint.</strong> Begins after signature and full payment. The fee is credited toward the
-              proposed Sprint if you proceed within sixty days. The Blueprint may conclude that we should not build.
+              <strong>Workflow Diagnosis.</strong> Begins after signature and full payment. The fee is credited toward
+              the proposed System Build if you proceed within sixty days. The Workflow Diagnosis may conclude that we
+              should not build.
             </li>
             <li>
-              <strong>Sprint.</strong> Fixed scope and fixed price, set out in the proposal with explicit exclusions
+              <strong>System Build.</strong> Fixed scope and fixed price, set out in the proposal with explicit exclusions
               and a definition of done. Paid fifty percent at kickoff, thirty percent after the approved workflow
               prototype, twenty percent before production launch. Changes to scope require written approval and a
               change order.
             </li>
             <li>
-              <strong>Care Plan.</strong> Monthly, starting after the two-week stabilization period, and required
+              <strong>Support &amp; Improvements.</strong> Monthly, starting after the two-week stabilization period, and required
               for systems we host. Third-party usage and unusual infrastructure costs are billed separately and kept
               visible.
             </li>

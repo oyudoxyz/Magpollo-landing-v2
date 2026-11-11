@@ -101,9 +101,9 @@ function organization() {
       '@type': 'OfferCatalog',
       name: 'Product systems',
       itemListElement: [
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Blueprint', description: 'We map the workflow as it actually runs and give you a fixed scope.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Sprint', description: 'We build the agreed system around your real workflow, with a written definition of done.' } },
-        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Care', description: 'Monitoring, fixes, updates and a monthly review of whether the system is still doing its job.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Workflow Diagnosis', description: 'We map one workflow as it runs today, what it costs you, and whether it is worth building.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'System Build', description: 'We design and launch one working system around how your team works. Fixed scope, fixed price.' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Support & Improvements', description: 'Monitoring, fixes, security updates and hosting oversight, with monthly improvements on the Plus level.' } },
       ],
     },
   };

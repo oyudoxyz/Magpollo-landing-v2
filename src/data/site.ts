@@ -29,11 +29,11 @@ export const MOBILE_NAV = [
   { to: '/careers', label: 'Careers' },
 ];
 
-/** The three things we sell, in the order a client meets them. No prices or timelines on the site. */
+/** The three things we sell, in the order a client meets them. No prices on the site. */
 export const OFFERS = [
-  { title: 'Blueprint', body: 'We learn how the work really happens today and give you a fixed scope. Sometimes the honest answer is that you don’t need to build anything.' },
-  { title: 'Sprint', body: 'We build the missing part around the tools worth keeping. You make one decision a week, and we agree in writing what “done” means.' },
-  { title: 'Care', body: 'We keep it running: fixes, updates, and a monthly check that it’s still doing its job. Your team stays in charge wherever judgment matters.' },
+  { title: 'Workflow Diagnosis', body: 'In 1–2 weeks, we study one part of your business that’s held together by spreadsheets, inboxes and memory. You get a map of how the work happens today, what it’s costing you, and a clear recommendation, including “don’t build” if that’s the right answer. The fee is credited in full toward your build if you go ahead.' },
+  { title: 'System Build', body: 'In 5 weeks, we design and launch one working system, built around how your team actually works and the tools worth keeping. Then 2 weeks of fixes and fine-tuning. Fixed scope, fixed price.' },
+  { title: 'Support & Improvements', body: 'After launch, we keep your system healthy and keep making it better. Essentials covers monitoring, fixes, security updates and hosting oversight. Plus adds up to 6 hours of improvements each month.' },
 ];
 
 /**
