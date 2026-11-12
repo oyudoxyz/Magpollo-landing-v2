@@ -66,6 +66,9 @@ SMTP_PASSWORD=your-smtp-password
 EMAIL_FROM=noreply@magpollo.com
 EMAIL_TO=salesteam@magpollo.com
 EMAIL_CC=team1@magpollo.com,team2@magpollo.com
+# Optional: also send enquiries to the outbound engine
+INBOUND_TOKEN=
+ENGINE_URL=https://mgp-engine.vercel.app
 ```
 
 ## Integration with Form Component

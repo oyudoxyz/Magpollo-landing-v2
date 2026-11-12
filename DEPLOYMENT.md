@@ -21,6 +21,8 @@ In your Vercel project settings, add the following environment variables:
 - `EMAIL_FROM`: noreply@magpollo.com
 - `EMAIL_TO`: salesteam@magpollo.com
 - `EMAIL_CC`: (Optional) Comma-separated list of CC recipients
+- `INBOUND_TOKEN`: (Optional) Same value as INBOUND_TOKEN in the outbound engine. When set, every form enquiry is also sent to the engine (server-side) and becomes a lead with a drafted reply.
+- `ENGINE_URL`: (Optional) Engine address, defaults to https://mgp-engine.vercel.app
 
 > **Important**: Keep your SMTP credentials secure! Never commit them to your repository.
 
