@@ -110,6 +110,41 @@ function generateEmailHtml(data) {
   `;
 }
 
+// Forward the enquiry to the Magpollo outbound engine, which turns it into a
+// lead with a drafted reply for the team to review. Server-side only, so the
+// token never reaches the browser. Never blocks or fails the form: the email
+// below is still the source of record.
+async function forwardToEngine(req, { name, email, company, message, details }) {
+  const token = process.env.INBOUND_TOKEN;
+  if (!token) return;
+  const base = (process.env.ENGINE_URL || 'https://mgp-engine.vercel.app').replace(/\/$/, '');
+  let phone;
+  try {
+    const rows = details ? JSON.parse(details) : [];
+    phone = Array.isArray(rows) ? rows.find((r) => r && r.label === 'Phone')?.value : undefined;
+  } catch {
+    phone = undefined;
+  }
+  try {
+    const r = await fetch(`${base}/api/inbound`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        name,
+        email,
+        company: company || undefined,
+        phone: phone || undefined,
+        message: message || undefined,
+        page: req.headers.referer || 'magpollo.com/lets-build',
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!r.ok) console.error('Engine inbound failed:', r.status, await r.text().catch(() => ''));
+  } catch (e) {
+    console.error('Engine inbound error:', e?.message || e);
+  }
+}
+
 export default async function handler(req, res) {
   // Only allow POST method
   if (req.method !== 'POST') {
@@ -142,6 +177,9 @@ export default async function handler(req, res) {
     if (!name || !email) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
+
+    // Runs alongside the email; awaited before responding (serverless).
+    const engine = forwardToEngine(req, { name, email, company, message, details: req.body.details });
 
     // Generate or use provided HTML email
     let finalHtml = emailHtml;
@@ -251,7 +289,7 @@ export default async function handler(req, res) {
     }
 
     // Send the email
-    const info = await transporter.sendMail(mailOptions);
+    const [info] = await Promise.all([transporter.sendMail(mailOptions), engine]);
     console.log('Email sent successfully:', info.messageId);
     console.log('Email accepted by:', info.accepted);
     console.log('Preview URL:', nodemailer.getTestMessageUrl(info));
